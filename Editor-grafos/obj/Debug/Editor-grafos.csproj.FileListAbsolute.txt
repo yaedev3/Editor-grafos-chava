@@ -1,0 +1,34 @@
+C:\Users\jason\Downloads\Editor-grafos\Editor-grafos\bin\Debug\Editor-grafos.exe.config
+C:\Users\jason\Downloads\Editor-grafos\Editor-grafos\bin\Debug\Editor-grafos.exe
+C:\Users\jason\Downloads\Editor-grafos\Editor-grafos\bin\Debug\Editor-grafos.pdb
+C:\Users\jason\Downloads\Editor-grafos\Editor-grafos\obj\Debug\Editor-grafos.csprojAssemblyReference.cache
+C:\Users\jason\Downloads\Editor-grafos\Editor-grafos\obj\Debug\Editor_grafos.FormEditor.resources
+C:\Users\jason\Downloads\Editor-grafos\Editor-grafos\obj\Debug\Editor_grafos.Properties.Resources.resources
+C:\Users\jason\Downloads\Editor-grafos\Editor-grafos\obj\Debug\Editor-grafos.csproj.GenerateResource.cache
+C:\Users\jason\Downloads\Editor-grafos\Editor-grafos\obj\Debug\Editor-grafos.csproj.CoreCompileInputs.cache
+C:\Users\jason\Downloads\Editor-grafos\Editor-grafos\obj\Debug\Editor-grafos.exe
+C:\Users\jason\Downloads\Editor-grafos\Editor-grafos\obj\Debug\Editor-grafos.pdb
+C:\Users\jason\Downloads\Editor-grafos\Editor-grafos\obj\Debug\Editor_grafos.Matriz.resources
+C:\Users\Salvador Rivera\Desktop\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.csprojAssemblyReference.cache
+C:\Users\Salvador Rivera\Desktop\Rivera_Flores\Editor-grafos\obj\Debug\Editor_grafos.FormEditor.resources
+C:\Users\Salvador Rivera\Desktop\Rivera_Flores\Editor-grafos\obj\Debug\Editor_grafos.Matriz.resources
+C:\Users\Salvador Rivera\Desktop\Rivera_Flores\Editor-grafos\obj\Debug\Editor_grafos.Properties.Resources.resources
+C:\Users\Salvador Rivera\Desktop\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.csproj.GenerateResource.cache
+C:\Users\Salvador Rivera\Desktop\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.csproj.CoreCompileInputs.cache
+C:\Users\Salvador Rivera\Desktop\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.exe
+C:\Users\Salvador Rivera\Desktop\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.pdb
+C:\Users\Salvador Rivera\Desktop\Rivera_Flores\Editor-grafos\bin\Debug\Editor-grafos.exe.config
+C:\Users\Salvador Rivera\Desktop\Rivera_Flores\Editor-grafos\bin\Debug\Editor-grafos.exe
+C:\Users\Salvador Rivera\Desktop\Rivera_Flores\Editor-grafos\bin\Debug\Editor-grafos.pdb
+C:\Users\jason\Downloads\Rivera_Flores\Rivera_Flores\Editor-grafos\bin\Debug\Editor-grafos.exe.config
+C:\Users\jason\Downloads\Rivera_Flores\Rivera_Flores\Editor-grafos\bin\Debug\Editor-grafos.exe
+C:\Users\jason\Downloads\Rivera_Flores\Rivera_Flores\Editor-grafos\bin\Debug\Editor-grafos.pdb
+C:\Users\jason\Downloads\Rivera_Flores\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.csprojAssemblyReference.cache
+C:\Users\jason\Downloads\Rivera_Flores\Rivera_Flores\Editor-grafos\obj\Debug\Editor_grafos.FormEditor.resources
+C:\Users\jason\Downloads\Rivera_Flores\Rivera_Flores\Editor-grafos\obj\Debug\Editor_grafos.Matriz.resources
+C:\Users\jason\Downloads\Rivera_Flores\Rivera_Flores\Editor-grafos\obj\Debug\Editor_grafos.Properties.Resources.resources
+C:\Users\jason\Downloads\Rivera_Flores\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.csproj.GenerateResource.cache
+C:\Users\jason\Downloads\Rivera_Flores\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.csproj.CoreCompileInputs.cache
+C:\Users\jason\Downloads\Rivera_Flores\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.exe
+C:\Users\jason\Downloads\Rivera_Flores\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.pdb
+C:\Users\jason\Downloads\Rivera_Flores\Rivera_Flores\Editor-grafos\obj\Debug\Editor_grafos.GrafosEspeciales.resources
