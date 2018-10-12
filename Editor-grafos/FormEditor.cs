@@ -184,6 +184,12 @@ namespace Editor_grafos
             Invalidate();
         }
 
+        //calcula los corolarios para saber si el grafo es plano y muestra un mensaje.
+        private void toolStripButtonCorolarios_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(grafo.Corolario(), "Corolarios");
+        }
+
         //evento del raton, hace diferentes cosas dependiendo de la accion
         //1 agrega un nuevo nodo
         //2 agrega una nueva arista

@@ -360,5 +360,77 @@ namespace Editor_grafos
                 else
                     NuevaArista(nodos[i], nodos[1]);
         }
+
+        public string Corolario()
+        {
+            int E, V, resultado;
+            string mensaje = "Corolario 1:\nE <= 3V - 6\n";
+
+            E = aristas.Count;
+            V = nodos.Count;
+            resultado = 0;
+
+            mensaje += string.Format("{0} <= 3({1}) - 6\n", E, V);
+            mensaje += string.Format("{0} <= {1} - 6\n", E, 3 * V);
+            mensaje += string.Format("{0} <= {1}\n", E, 3 * V - 6);
+
+            if (E <= 3 * V - 6)
+                mensaje += "Es plano!\n\n";
+            else mensaje += "No es plano\n\n";
+            mensaje += "Corolario 2:\nE <= 2V - 4\n";
+
+            if (V > 2)
+                for (int i = 0; i < nodos.Count; i++)
+                {
+                    for (int j = 0; j < nodos[i].GetRelaciones.Count; j++)
+                    {
+                        nodos[i].GetVisitado = true;
+                        resultado = BuscaCiclos(nodos[i].GetRelaciones[j], 1, nodos[i]);
+
+                        CambiaANoVisitados();
+
+                        if (resultado > 0)
+                            break;
+                    }
+                    if (resultado > 0)
+                        break;
+                }
+
+            if (resultado == 0)
+            {
+                mensaje += string.Format("{0} <= 2({1}) - 4\n", E, V);
+                mensaje += string.Format("{0} <= {1} - 4\n", E, 2 * V);
+                mensaje += string.Format("{0} <= {1}\n", E, 2 * V - 4);
+                if (E <= 2 * V - 4)
+                    mensaje += "Es plano!\n";
+                else mensaje += "No es plano\n";
+            }
+            else mensaje += "No se puede aplicar porque tiene circuito de longitud 3\n";
+
+            return mensaje;
+        }
+
+        public void CambiaANoVisitados()
+        {
+            foreach (Nodo nodo in nodos)
+                nodo.GetVisitado = false;
+        }
+
+        private int BuscaCiclos(Nodo siguiente, int tam, Nodo busqueda)
+        {
+            int f = 0;
+            siguiente.GetVisitado = true;
+
+            if (tam > 0)
+            {
+                for (int i = 0; i < siguiente.GetRelaciones.Count; i++)
+                    if (!siguiente.GetRelaciones[i].GetVisitado)
+                        f += BuscaCiclos(siguiente.GetRelaciones[i], tam - 1, busqueda);
+            }
+            else if (siguiente.GetRelaciones.Contains(busqueda))
+                f = 1;
+
+            return f;
+        }
     }
 }

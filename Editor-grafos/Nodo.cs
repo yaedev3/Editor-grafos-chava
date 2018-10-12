@@ -14,6 +14,7 @@ namespace Editor_grafos
         private char nombre;
         private List<Nodo> relaciones;
         private Rectangle rectangulo;
+        private bool visitado;
 
         public Nodo(int x, int y, char nombre)
         {
@@ -24,6 +25,7 @@ namespace Editor_grafos
             this.x = x;
             this.y = y;
 
+            visitado = false;
             this.nombre = nombre;
             rectangulo = new Rectangle(x, y, tamano, tamano);
             relaciones = new List<Nodo>();
@@ -131,6 +133,19 @@ namespace Editor_grafos
                 if (relacion.GetNombre.Equals(nombre))
                     respuesta = "1";
             return respuesta;
+        }
+
+        //devuelve la bandera del nodo visitado
+        public bool GetVisitado
+        {
+            get
+            {
+                return visitado;
+            }
+            set
+            {
+                visitado = value;
+            }
         }
     }
 }

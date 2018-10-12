@@ -43,6 +43,7 @@
             this.toolStripButtonCn = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonKn = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonWn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonCorolarios = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,7 +63,8 @@
             this.toolStripButton1,
             this.toolStripButtonCn,
             this.toolStripButtonKn,
-            this.toolStripButtonWn});
+            this.toolStripButtonWn,
+            this.toolStripButtonCorolarios});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(685, 32);
@@ -199,6 +201,16 @@
             this.toolStripButtonWn.Text = "Wn";
             this.toolStripButtonWn.Click += new System.EventHandler(this.toolStripButtonWn_Click);
             // 
+            // toolStripButtonCorolarios
+            // 
+            this.toolStripButtonCorolarios.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonCorolarios.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCorolarios.Image")));
+            this.toolStripButtonCorolarios.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonCorolarios.Name = "toolStripButtonCorolarios";
+            this.toolStripButtonCorolarios.Size = new System.Drawing.Size(29, 29);
+            this.toolStripButtonCorolarios.Text = "Corolarios";
+            this.toolStripButtonCorolarios.Click += new System.EventHandler(this.toolStripButtonCorolarios_Click);
+            // 
             // FormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -232,6 +244,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonCn;
         private System.Windows.Forms.ToolStripButton toolStripButtonKn;
         private System.Windows.Forms.ToolStripButton toolStripButtonWn;
+        private System.Windows.Forms.ToolStripButton toolStripButtonCorolarios;
     }
 }
 
