@@ -64,8 +64,8 @@ namespace Editor_grafos
         {
             bool respuesta = false;
 
-            foreach(Nodo nodo in nodos)
-                if(nodo.EstaDentro(x,y))
+            foreach (Nodo nodo in nodos)
+                if (nodo.EstaDentro(x, y))
                 {
                     respuesta = true;
                     break;
@@ -150,7 +150,7 @@ namespace Editor_grafos
                 for (int i = 1; i < matriz[0].Count; i++)
                     matriz[matriz.Count - 1].Add(nodo.BuscaRelacion(matriz[0][i]));
             }
-            
+
             return matriz;
         }
 
@@ -164,7 +164,7 @@ namespace Editor_grafos
 
             foreach (Nodo nodo in nodos)
                 matriz[0].Add("");
-            
+
             foreach (Nodo nodo in nodos)
             {
                 matriz.Add(new List<string>());
@@ -198,7 +198,7 @@ namespace Editor_grafos
                 foreach (Nodo nodo2 in nodos)
                     if (!nodo2.Igual(nodo) && nodo2.BuscaRelacion(nodo.GetNombre).Equals("1"))
                         busqueda++;
-         
+
                 matriz[matriz.Count - 1].Add(busqueda.ToString());
                 matriz[matriz.Count - 1].Add(nodo.GetRelaciones.Count.ToString());
             }
@@ -361,6 +361,7 @@ namespace Editor_grafos
                     NuevaArista(nodos[i], nodos[1]);
         }
 
+        //Verifica si un grafo es plano según sus corolarios.
         public string Corolario()
         {
             int E, V, resultado;
@@ -387,7 +388,7 @@ namespace Editor_grafos
                         nodos[i].GetVisitado = true;
                         resultado = BuscaCiclos(nodos[i].GetRelaciones[j], 1, nodos[i]);
 
-                        CambiaANoVisitados();
+                        NodosVisitados();
 
                         if (resultado > 0)
                             break;
@@ -410,12 +411,21 @@ namespace Editor_grafos
             return mensaje;
         }
 
-        public void CambiaANoVisitados()
+        //Cambia todas las banderas de los nodos a no visitados.
+        public void NodosVisitados()
         {
             foreach (Nodo nodo in nodos)
                 nodo.GetVisitado = false;
         }
 
+        //Cambia todas las banderas de las aristas a no visitados.
+        public void AristasVisitadas()
+        {
+            foreach (Arista arista in aristas)
+                arista.GetVisitado = false;
+        }
+
+        //Busca ciclos dentro del grafo.
         private int BuscaCiclos(Nodo siguiente, int tam, Nodo busqueda)
         {
             int f = 0;
@@ -431,6 +441,155 @@ namespace Editor_grafos
                 f = 1;
 
             return f;
+        }
+
+        //Calcula los caminos y circuitos de euler, regresa una cadena con el resultado.
+        public string Euler()
+        {
+            string euler, mensaje;
+            int gradoNodos;
+            bool completo;
+
+            euler = "Circuito\n";
+            gradoNodos = 0;
+            completo = false;
+
+            //Hace el conteo de relaciones de grado par en las relaciones de los nodos.
+            foreach (Nodo nodo in nodos)
+                if (nodo.GetRelaciones.Count != 0 && nodo.GetRelaciones.Count % 2 == 0)
+                    gradoNodos++;
+
+            //Verifica si todas las relaciones son pares.
+            if (gradoNodos == nodos.Count && nodos.Count != 0)
+                foreach (Nodo nodo in nodos)
+                {
+                    mensaje = "";
+                    mensaje = AlgoritmoEuler(nodo, mensaje, aristas.Count);
+                    completo = CaminoCompleto(mensaje);
+                    if (completo)
+                    {
+                        euler += OrdenarCircuito(mensaje.Remove(mensaje.Length - 2));
+                        break;
+                    }
+                    AristasVisitadas();
+                }
+        
+            if (completo)
+                return euler;
+            else
+            {
+                euler = "Camino:\n";
+                gradoNodos = 0;
+            }
+
+            //Hace el conteo de relaciones de grado impar en las relaciones de los nodos.
+            foreach (Nodo nodo in nodos)
+                if (nodo.GetRelaciones.Count != 0 && nodo.GetRelaciones.Count % 2 == 1)
+                    gradoNodos++;
+
+            //Verifica si dos relaciones son impares.
+            if (gradoNodos == 2)
+            {
+                foreach (Nodo nodo in nodos)
+                {
+                    mensaje = "";
+                    mensaje = AlgoritmoEuler(nodo, mensaje, aristas.Count);
+                    completo = CaminoCompleto(mensaje);
+                    if (completo)
+                    {
+                        euler += mensaje.Remove(mensaje.Length - 2);
+                        break;
+                    }
+                    AristasVisitadas();
+                }
+            }
+
+            if (!completo)
+                euler = "Circuito:\nNinguno\nCamino:\nNinguno.";
+
+            return euler;
+        }
+
+        //Algoritmo para el camino y circuito de euler de forma recursiva.
+        private string AlgoritmoEuler(Nodo inicio, string resultado, int tam)
+        {
+            if (inicio != null)
+            {
+                resultado += inicio.GetNombre + "->";
+                if (tam > 0)
+                    resultado = AlgoritmoEuler(SiguienteNodo(inicio), resultado, AristasSinVisitar());
+            }
+            return resultado;
+        }
+
+        //Obtiene el siguiente nodo apartir de un nodo de inicio.
+        private Nodo SiguienteNodo(Nodo nodo)
+        {
+            int indice = -1;
+
+            foreach (Arista arista in aristas)
+                if (arista.GetOrigen.Igual(nodo) && !arista.GetVisitado)
+                {
+                    indice = nodos.IndexOf(arista.GetDestino);
+                    arista.GetVisitado = true;
+                    break;
+                }
+                else if (arista.GetDestino.Igual(nodo) && !arista.GetVisitado)
+                {
+                    indice = nodos.IndexOf(arista.GetOrigen);
+                    arista.GetVisitado = true;
+                    break;
+                }
+
+            if (indice != -1)
+                return nodos[indice];
+            else
+                return null;
+        }
+
+        //Regresa cuantas aristas aun no han sido visitadas.
+        private int AristasSinVisitar()
+        {
+            int resultado = 0;
+
+            foreach (Arista arista in aristas)
+                if (!arista.GetVisitado)
+                    resultado++;
+
+            return resultado;
+        }
+
+        //Verifica si se hizo correctamente el algoritmo.
+        private bool CaminoCompleto(string camino)
+        {
+            List<string> lista = new List<string>(camino.Remove(camino.Length - 2).Replace("->", "♣").Split('♣'));
+
+            return lista.Count == aristas.Count + 1;
+        }
+
+        //Cambia el orden del circuito para que siempre empiece con el primer nodo.
+        private string OrdenarCircuito(string circuito)
+        {
+            string nuevoCircuito;
+            List<string> lista;
+            int indice;
+
+            lista = new List<string>(circuito.Replace("->", "♣").Split('♣'));
+            indice = lista.IndexOf(nodos[0].GetNombre);
+
+            if (indice == 0)
+                nuevoCircuito = circuito;
+            else
+            {
+                nuevoCircuito = "";
+                for (int i = 0; i < indice; i++)
+                    lista.Add(lista[i]);
+
+                lista.RemoveRange(0, indice);
+                lista.Add(nodos[0].GetNombre);
+            }
+
+            return nuevoCircuito;
         }
     }
 }

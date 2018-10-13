@@ -69,6 +69,7 @@ namespace Editor_grafos
             grafo.Clear();
             toolStripButtonAristaND.Enabled = true;
             toolStripButtonAristaD.Enabled = true;
+            accion = -1;
             Invalidate();
         }
 
@@ -188,6 +189,11 @@ namespace Editor_grafos
         private void toolStripButtonCorolarios_Click(object sender, EventArgs e)
         {
             MessageBox.Show(grafo.Corolario(), "Corolarios");
+        }
+
+        private void toolStripButtonEuler_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(grafo.Euler(), "Euler");
         }
 
         //evento del raton, hace diferentes cosas dependiendo de la accion

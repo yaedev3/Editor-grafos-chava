@@ -12,12 +12,14 @@ namespace Editor_grafos
         private Nodo origen, destino;
         private char nombre;
         private List<Point> puntos;
+        private bool visitado;
 
         public Arista(Nodo origen, Nodo destino, char nombre)
         {
             this.origen = origen;
             this.destino = destino;
             this.nombre = nombre;
+            visitado = false;
             puntos = new List<Point>();
             CalculaArista();
         }
@@ -117,6 +119,19 @@ namespace Editor_grafos
                 else auxiliar = new Rectangle(origen.GetRectangulo.X + origen.GetTamano / 4, origen.GetRectangulo.Y + origen.GetTamano / 4 + 5, origen.GetTamano, origen.GetTamano);
 
                 return auxiliar;
+            }
+        }
+
+        //devuelve la bandera si la arista esta visitada
+        public bool GetVisitado
+        {
+            get
+            {
+                return visitado;
+            }
+            set
+            {
+                visitado = value;
             }
         }
     }

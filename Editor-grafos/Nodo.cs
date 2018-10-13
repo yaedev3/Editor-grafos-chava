@@ -135,7 +135,7 @@ namespace Editor_grafos
             return respuesta;
         }
 
-        //devuelve la bandera del nodo visitado
+        //devuelve la bandera si el nodo esta visitado
         public bool GetVisitado
         {
             get

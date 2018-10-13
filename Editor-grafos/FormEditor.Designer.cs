@@ -44,6 +44,7 @@
             this.toolStripButtonKn = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonWn = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCorolarios = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonEuler = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,7 +65,8 @@
             this.toolStripButtonCn,
             this.toolStripButtonKn,
             this.toolStripButtonWn,
-            this.toolStripButtonCorolarios});
+            this.toolStripButtonCorolarios,
+            this.toolStripButtonEuler});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(685, 32);
@@ -211,6 +213,16 @@
             this.toolStripButtonCorolarios.Text = "Corolarios";
             this.toolStripButtonCorolarios.Click += new System.EventHandler(this.toolStripButtonCorolarios_Click);
             // 
+            // toolStripButtonEuler
+            // 
+            this.toolStripButtonEuler.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonEuler.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEuler.Image")));
+            this.toolStripButtonEuler.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonEuler.Name = "toolStripButtonEuler";
+            this.toolStripButtonEuler.Size = new System.Drawing.Size(29, 29);
+            this.toolStripButtonEuler.Text = "Euler";
+            this.toolStripButtonEuler.Click += new System.EventHandler(this.toolStripButtonEuler_Click);
+            // 
             // FormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -245,6 +257,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonKn;
         private System.Windows.Forms.ToolStripButton toolStripButtonWn;
         private System.Windows.Forms.ToolStripButton toolStripButtonCorolarios;
+        private System.Windows.Forms.ToolStripButton toolStripButtonEuler;
     }
 }
 
