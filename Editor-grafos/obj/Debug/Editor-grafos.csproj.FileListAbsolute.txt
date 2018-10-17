@@ -44,3 +44,15 @@ C:\Users\jason\Desktop\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.cspro
 C:\Users\jason\Desktop\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.csproj.CoreCompileInputs.cache
 C:\Users\jason\Desktop\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.exe
 C:\Users\jason\Desktop\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.pdb
+C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\bin\Debug\Editor-grafos.exe.config
+C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\bin\Debug\Editor-grafos.exe
+C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\bin\Debug\Editor-grafos.pdb
+C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.csprojAssemblyReference.cache
+C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\obj\Debug\Editor_grafos.FormEditor.resources
+C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\obj\Debug\Editor_grafos.GrafosEspeciales.resources
+C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\obj\Debug\Editor_grafos.Matriz.resources
+C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\obj\Debug\Editor_grafos.Properties.Resources.resources
+C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.csproj.GenerateResource.cache
+C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.csproj.CoreCompileInputs.cache
+C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.exe
+C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.pdb

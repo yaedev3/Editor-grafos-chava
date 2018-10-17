@@ -39,12 +39,13 @@
             this.toolStripButtonMatrizIncidencia = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonGradosDirigidos = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonGradosNoDirigidos = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCn = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonKn = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonWn = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCorolarios = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonEuler = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonKura = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonIso = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,12 +62,13 @@
             this.toolStripButtonMatrizIncidencia,
             this.toolStripButtonGradosDirigidos,
             this.toolStripButtonGradosNoDirigidos,
-            this.toolStripButton1,
             this.toolStripButtonCn,
             this.toolStripButtonKn,
             this.toolStripButtonWn,
             this.toolStripButtonCorolarios,
-            this.toolStripButtonEuler});
+            this.toolStripButtonEuler,
+            this.toolStripButtonIso,
+            this.toolStripButtonKura});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(685, 32);
@@ -163,16 +165,6 @@
             this.toolStripButtonGradosNoDirigidos.Text = "Grados no dirigidos";
             this.toolStripButtonGradosNoDirigidos.Click += new System.EventHandler(this.toolStripButtonGradosNoDirigidos_Click);
             // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(29, 29);
-            this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
             // toolStripButtonCn
             // 
             this.toolStripButtonCn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -223,6 +215,26 @@
             this.toolStripButtonEuler.Text = "Euler";
             this.toolStripButtonEuler.Click += new System.EventHandler(this.toolStripButtonEuler_Click);
             // 
+            // toolStripButtonKura
+            // 
+            this.toolStripButtonKura.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonKura.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonKura.Image")));
+            this.toolStripButtonKura.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonKura.Name = "toolStripButtonKura";
+            this.toolStripButtonKura.Size = new System.Drawing.Size(29, 29);
+            this.toolStripButtonKura.Text = "Kuratowsky";
+            this.toolStripButtonKura.Click += new System.EventHandler(this.toolStripButtonKura_Click);
+            // 
+            // toolStripButtonIso
+            // 
+            this.toolStripButtonIso.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonIso.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonIso.Image")));
+            this.toolStripButtonIso.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonIso.Name = "toolStripButtonIso";
+            this.toolStripButtonIso.Size = new System.Drawing.Size(29, 29);
+            this.toolStripButtonIso.Text = "Isomorfismo";
+            this.toolStripButtonIso.Click += new System.EventHandler(this.toolStripButtonIso_Click);
+            // 
             // FormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -252,12 +264,13 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonGradosDirigidos;
         private System.Windows.Forms.ToolStripButton toolStripButtonGradosNoDirigidos;
         private System.Windows.Forms.ToolStripButton toolStripButtonMatrizIncidencia;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButtonCn;
         private System.Windows.Forms.ToolStripButton toolStripButtonKn;
         private System.Windows.Forms.ToolStripButton toolStripButtonWn;
         private System.Windows.Forms.ToolStripButton toolStripButtonCorolarios;
         private System.Windows.Forms.ToolStripButton toolStripButtonEuler;
+        private System.Windows.Forms.ToolStripButton toolStripButtonKura;
+        private System.Windows.Forms.ToolStripButton toolStripButtonIso;
     }
 }
 

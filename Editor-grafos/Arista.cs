@@ -10,15 +10,15 @@ namespace Editor_grafos
     class Arista
     {
         private Nodo origen, destino;
-        private char nombre;
+        private string nombre;
         private List<Point> puntos;
         private bool visitado;
 
-        public Arista(Nodo origen, Nodo destino, char nombre)
+        public Arista(Nodo origen, Nodo destino, int nombre)
         {
             this.origen = origen;
             this.destino = destino;
-            this.nombre = nombre;
+            this.nombre = "E" + nombre;
             visitado = false;
             puntos = new List<Point>();
             CalculaArista();

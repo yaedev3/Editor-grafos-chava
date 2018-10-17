@@ -19,7 +19,7 @@ namespace Editor_grafos
             aristas = new List<Arista>();
             tipoArista = -1;
             nombreNodo = 65;
-            nombreArista = 65;
+            nombreArista = 1;
         }
 
         //regresa los nodos del grafo
@@ -47,7 +47,7 @@ namespace Editor_grafos
             aristas.Clear();
             tipoArista = -1;
             nombreNodo = 65;
-            nombreArista = 65;
+            nombreArista = 1;
         }
 
         //agrega un nuevo nodo al grafo
@@ -77,9 +77,7 @@ namespace Editor_grafos
         //agrega una nueva arista al grafo
         public void NuevaArista(Nodo origen, Nodo destino)
         {
-            if (nombreArista > 90 && nombreArista < 97)
-                nombreArista = 97;
-            aristas.Add(new Arista(origen, destino, (char)nombreArista));
+            aristas.Add(new Arista(origen, destino, nombreArista));
 
             if (tipoArista == 0)//dirigido
                 AgregarRelacion(origen, destino);
@@ -126,7 +124,7 @@ namespace Editor_grafos
         public void AgregarRelacion(Nodo nodo, Nodo relacion)
         {
             for (int i = 0; i < nodos.Count; i++)
-                if (nodos[i].Igual(nodo))
+                if (nodos[i].GetNombre.Equals(nodo.GetNombre))
                 {
                     nodos[i].AgregarRelacion(relacion);
                     break;
@@ -154,6 +152,20 @@ namespace Editor_grafos
             return matriz;
         }
 
+        //genera la matriz de adyacencia del grafo sin encabezados
+        public List<List<string>> MatrizAdyacenciaSimple()
+        {
+            List<List<string>> matriz = new List<List<string>>();
+            foreach (Nodo nodo in nodos)
+            {
+                matriz.Add(new List<string>());
+                for (int i = 0; i < nodos.Count; i++)
+                    matriz[matriz.Count - 1].Add(nodo.BuscaRelacion(nodos[i].GetNombre));
+            }
+
+            return matriz;
+        }
+
         //genera la lista de adyacencia del grafo
         public List<List<string>> ListaAdyacencia()
         {
@@ -173,6 +185,20 @@ namespace Editor_grafos
                     if (i < nodo.GetRelaciones.Count)
                         matriz[matriz.Count - 1].Add(nodo.GetRelaciones[i].GetNombre);
                     else matriz[matriz.Count - 1].Add("");
+            }
+
+            return matriz;
+        }
+
+        public List<List<string>> ListaGrados()
+        {
+            List<List<string>> matriz = new List<List<string>>();
+
+            foreach (Nodo nodo in nodos)
+            {
+                matriz.Add(new List<string>());
+                matriz[matriz.Count - 1].Add(nodo.GetNombre);
+                matriz[matriz.Count - 1].Add(nodo.GetRelaciones.Count.ToString());
             }
 
             return matriz;
@@ -241,12 +267,26 @@ namespace Editor_grafos
                 matriz.Add(new List<string>());
                 matriz[matriz.Count - 1].Add(nodo.GetNombre);
                 foreach (Arista arista in aristas)
-                    foreach (Nodo relacion in nodo.GetRelaciones)
-                        if (relacion.Igual(arista.GetOrigen) || relacion.Igual(arista.GetDestino))
-                        {
-                            matriz[matriz.Count - 1].Add("1");
-                            break;
-                        }
+                    if (nodo.Igual(arista.GetOrigen) || nodo.Igual(arista.GetDestino))
+                        matriz[matriz.Count - 1].Add("1");
+                    else matriz[matriz.Count - 1].Add("0");
+            }
+
+            return matriz;
+        }
+
+        //genera la matriz de adyacencia del grafo sin encabezados
+        public List<List<string>> MatrizIncidenciaSimple()
+        {
+            List<List<string>> matriz = new List<List<string>>();
+
+            foreach (Nodo nodo in nodos)
+            {
+                matriz.Add(new List<string>());
+                foreach (Arista arista in aristas)
+                    if (nodo.GetNombre.Equals(arista.GetOrigen.GetNombre) || nodo.GetNombre.Equals(arista.GetDestino.GetNombre))
+                        matriz[matriz.Count - 1].Add("1");
+                    else matriz[matriz.Count - 1].Add("0");
             }
 
             return matriz;
@@ -359,6 +399,116 @@ namespace Editor_grafos
                     NuevaArista(nodos[i], nodos[i + 1]);
                 else
                     NuevaArista(nodos[i], nodos[1]);
+        }
+
+        //Verifica si dos grafos son isomorficos.
+        public bool isomorfismo(Grafo grafo2, ref string resultado, string nombreGrafo1, string nombreGrafo2)
+        {
+            bool respuesta = false;
+            List<int> biyeccion1, biyeccion2;
+
+            if (aristas.Count == grafo2.GetAristas.Count && nodos.Count == grafo2.GetNodos.Count)
+            {
+                biyeccion1 = BiyeccionDeNodos();
+                biyeccion2 = grafo2.BiyeccionDeNodos();
+
+                if(ComparaArreglos(biyeccion1, biyeccion2))
+                {
+                    resultado = "El grafo es isomorfo\n";
+                    resultado += nombreGrafo1 + ": numero de nodos " + nodos.Count + " y numero de aristas " + aristas.Count;
+                    resultado += "\n" + nombreGrafo2 + ": numero nodos " + grafo2.GetNodos.Count + " y numero de aristas " + grafo2.GetAristas.Count;
+                    resultado += "\nLos grados de " + nombreGrafo1 + " son:\n" + ImprimeMatriz(ListaGrados());
+                    resultado += "Los grados de "+ nombreGrafo2 + " son:\n" + ImprimeMatriz(grafo2.ListaGrados());
+                    resultado += "La matriz de adyacencia de " + nombreGrafo1 + " es:\n" + ImprimeMatriz(MatrizAdyacenciaSimple());
+                    resultado += "La matriz de adyacencia de " + nombreGrafo2 + " es:\n" + ImprimeMatriz(grafo2.MatrizAdyacenciaSimple());
+                    resultado += "La matriz de resultante es:\n" + ImprimeMatriz(MatrizAdyacenciaSimple());
+
+                    respuesta = true;
+                }
+                else
+                {
+                    resultado = "No es isomorfo porque los grados de nodos y aristas no son iguales.\n";
+                    resultado += nombreGrafo1 + ": numero de nodos " + nodos.Count + " y numero de aristas " + aristas.Count;
+                    resultado += "\n" + nombreGrafo2 + ": numero nodos " + grafo2.GetNodos.Count + " y numero de aristas " + grafo2.GetAristas.Count;
+                }
+            }
+            else
+            {
+                resultado = "No es isomorfo porque los grados de nodos y aristas no son iguales.\n";
+                resultado += nombreGrafo1 + ": numero de nodos " + nodos.Count + " y numero de aristas " + aristas.Count;
+                resultado += "\n" + nombreGrafo2 + ": numero nodos " + grafo2.GetNodos.Count + " y numero de aristas " + grafo2.GetAristas.Count;
+            }
+
+            return respuesta;
+        }
+
+        //Saca la biyeccion de los nodos.
+        public List<int> BiyeccionDeNodos()
+        {
+            List<int> biyeccion = new List<int>();
+
+            foreach (Nodo nodo in nodos)
+                biyeccion.Add(nodo.GetRelaciones.Count);
+
+            return biyeccion;
+        }
+
+        //Compara dos arreglos en busca de conincidencias
+        private bool ComparaArreglos(List<int> arreglo1, List<int> arreglo2)
+        {
+            bool respuesta = true;
+            List<int> comparaciones = new List<int>();
+
+            for (int i = 0; i < arreglo1.Count; i++)
+                for (int j = 0; j < arreglo2.Count; j++)
+                    if (arreglo1[i] == arreglo2[j] && !comparaciones.Contains(j))
+                    {
+                        comparaciones.Add(j);
+                        break;
+                    }
+
+            if (comparaciones.Count != arreglo1.Count)
+                respuesta = false;
+
+            return respuesta;
+        }
+
+        //Convierte una matriz a texto.
+        private string ImprimeMatriz(List<List<string>> V)
+        {
+            string matriz = "";
+
+            for (int i = 0; i < V.Count; i++)
+            {
+                for (int j = 0; j < V[i].Count; j++)
+                    matriz += V[i][j] + " ";
+                matriz += "\n";
+            }
+
+            return matriz;
+        }
+
+        //Hace el algoritmo de kuratowski con el grafo K5.
+        public string Kuratowsky()
+        {
+            Grafo grafo2 = new Grafo();
+            string resultado = "";
+            string corolarios = Corolario();
+
+            if (corolarios.Contains("No es plano"))
+            {
+                corolarios = "El grafo no es plano.\nSe comparo con K5 y este fue el resultado:\n";
+                grafo2.KN(5, 0, 0, 0, 0);
+                isomorfismo(grafo2, ref resultado, "Grafo uno", "K5");
+
+            }
+            else
+            {
+                corolarios = "";
+                resultado = "El grafo es plano";
+            }
+
+            return corolarios + resultado;
         }
 
         //Verifica si un grafo es plano según sus corolarios.

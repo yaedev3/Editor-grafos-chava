@@ -34,7 +34,7 @@ namespace Editor_grafos
             formato = new StringFormat();//formato de la cadena
             formato.FormatFlags = StringFormatFlags.FitBlackBox;
             destino = origen = new Nodo(0, 0, '♪');//inicializa los nodos
-            toolStripButtonMatrizIncidencia.Visible = false;
+            toolStripButtonIso.Visible = false;
         }
 
         //boton de agregar nodo pone la accion en 1
@@ -127,11 +127,6 @@ namespace Editor_grafos
             matriz.Show();
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-           
-        }
-
         //abre una nueva ventana para crear un grafo Cn
         private void toolStripButtonCn_Click(object sender, EventArgs e)
         {
@@ -191,9 +186,22 @@ namespace Editor_grafos
             MessageBox.Show(grafo.Corolario(), "Corolarios");
         }
 
+        //calcula el algoritmo de caminos de euler en el grafo actual.
         private void toolStripButtonEuler_Click(object sender, EventArgs e)
         {
             MessageBox.Show(grafo.Euler(), "Euler");
+        }
+
+        //calcula kuratowsky automatico.
+        private void toolStripButtonKura_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(grafo.Kuratowsky(), "Kuratoswki");
+        }
+
+        //
+        private void toolStripButtonIso_Click(object sender, EventArgs e)
+        {
+
         }
 
         //evento del raton, hace diferentes cosas dependiendo de la accion
