@@ -407,6 +407,12 @@ namespace Editor_grafos
             bool respuesta = false;
             List<int> biyeccion1, biyeccion2;
 
+            resultado = "No es isomorfo porque los grados de nodos y aristas no son iguales.\n";
+            resultado += nombreGrafo1 + ": numero de nodos " + nodos.Count + " y numero de aristas " + aristas.Count;
+            resultado += "\n" + nombreGrafo2 + ": numero nodos " + grafo2.GetNodos.Count + " y numero de aristas " + grafo2.GetAristas.Count;
+            resultado += "\nLa matriz de adyacencia de " + nombreGrafo1 + " es:\n" + ImprimeMatriz(MatrizAdyacenciaSimple());
+            resultado += "La matriz de adyacencia de " + nombreGrafo2 + " es:\n" + ImprimeMatriz(grafo2.MatrizAdyacenciaSimple());
+
             if (aristas.Count == grafo2.GetAristas.Count && nodos.Count == grafo2.GetNodos.Count)
             {
                 biyeccion1 = BiyeccionDeNodos();
@@ -417,26 +423,11 @@ namespace Editor_grafos
                     resultado = "El grafo es isomorfo\n";
                     resultado += nombreGrafo1 + ": numero de nodos " + nodos.Count + " y numero de aristas " + aristas.Count;
                     resultado += "\n" + nombreGrafo2 + ": numero nodos " + grafo2.GetNodos.Count + " y numero de aristas " + grafo2.GetAristas.Count;
-                    resultado += "\nLos grados de " + nombreGrafo1 + " son:\n" + ImprimeMatriz(ListaGrados());
-                    resultado += "Los grados de "+ nombreGrafo2 + " son:\n" + ImprimeMatriz(grafo2.ListaGrados());
-                    resultado += "La matriz de adyacencia de " + nombreGrafo1 + " es:\n" + ImprimeMatriz(MatrizAdyacenciaSimple());
+                    resultado += "\nLa matriz de adyacencia de " + nombreGrafo1 + " es:\n" + ImprimeMatriz(MatrizAdyacenciaSimple());
                     resultado += "La matriz de adyacencia de " + nombreGrafo2 + " es:\n" + ImprimeMatriz(grafo2.MatrizAdyacenciaSimple());
                     resultado += "La matriz de resultante es:\n" + ImprimeMatriz(MatrizAdyacenciaSimple());
-
                     respuesta = true;
                 }
-                else
-                {
-                    resultado = "No es isomorfo porque los grados de nodos y aristas no son iguales.\n";
-                    resultado += nombreGrafo1 + ": numero de nodos " + nodos.Count + " y numero de aristas " + aristas.Count;
-                    resultado += "\n" + nombreGrafo2 + ": numero nodos " + grafo2.GetNodos.Count + " y numero de aristas " + grafo2.GetAristas.Count;
-                }
-            }
-            else
-            {
-                resultado = "No es isomorfo porque los grados de nodos y aristas no son iguales.\n";
-                resultado += nombreGrafo1 + ": numero de nodos " + nodos.Count + " y numero de aristas " + aristas.Count;
-                resultado += "\n" + nombreGrafo2 + ": numero nodos " + grafo2.GetNodos.Count + " y numero de aristas " + grafo2.GetAristas.Count;
             }
 
             return respuesta;
@@ -496,17 +487,12 @@ namespace Editor_grafos
             string corolarios = Corolario();
 
             if (corolarios.Contains("No es plano"))
-            {
-                corolarios = "El grafo no es plano.\nSe comparo con K5 y este fue el resultado:\n";
-                grafo2.KN(5, 0, 0, 0, 0);
-                isomorfismo(grafo2, ref resultado, "Grafo uno", "K5");
-
-            }
+                corolarios = "El grafo NO es plano.\nSe comparo con K5 y este fue el resultado:\n";
             else
-            {
-                corolarios = "";
-                resultado = "El grafo es plano";
-            }
+                corolarios = "El grafo ES plano.\nSe comparo con K5 y este fue el resultado:\n";
+
+            grafo2.KN(5, 0, 0, 0, 0);
+            isomorfismo(grafo2, ref resultado, "Grafo uno", "K5");
 
             return corolarios + resultado;
         }
@@ -737,6 +723,9 @@ namespace Editor_grafos
 
                 lista.RemoveRange(0, indice);
                 lista.Add(nodos[0].GetNombre);
+                for (int i = 0; i < lista.Count; i++)
+                    nuevoCircuito += lista[i] + "->";
+                nuevoCircuito = nuevoCircuito.Remove(nuevoCircuito.Length - 2);
             }
 
             return nuevoCircuito;
