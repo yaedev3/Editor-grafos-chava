@@ -16,12 +16,13 @@ namespace Editor_grafos
     public partial class FormEditor : Form
     {
         private Grafo grafo;
-        private int accion;
+        private int accion, algoritmo, aristaSeleccionada;
         private Pen pluma;
         private SolidBrush etiquetas;
         private Font font;
         private StringFormat formato;
         private Nodo origen, destino;
+        private List<Color> colores;
 
         public FormEditor()
         {
@@ -35,6 +36,10 @@ namespace Editor_grafos
             formato.FormatFlags = StringFormatFlags.FitBlackBox;
             destino = origen = new Nodo(0, 0, '♪');//inicializa los nodos
             toolStripButtonIso.Visible = false;
+            colores = new List<Color>();
+            DefineColores();
+            algoritmo = -1;
+            numericUpDownPeso.Visible = false;
         }
 
         //boton de agregar nodo pone la accion en 1
@@ -81,15 +86,23 @@ namespace Editor_grafos
             foreach (Arista arista in grafo.GetAristas)
             {
                 e.Graphics.DrawLines(pluma, arista.GetCentro());
-                e.Graphics.DrawString(arista.GetNombre, font, etiquetas, arista.GetNombreRectangulo, formato);
+                e.Graphics.DrawString(arista.GetPeso.ToString(), font, etiquetas, arista.GetNombreRectangulo, formato);
             }
 
-            foreach(Nodo nodo in grafo.GetNodos)
+            foreach (Nodo nodo in grafo.GetNodos)
             {
                 e.Graphics.DrawEllipse(pluma, nodo.GetRectangulo);
-                e.Graphics.FillEllipse(new SolidBrush(Color.White), nodo.GetRectangulo);
+                switch(algoritmo)
+                {
+                    case -1:
+                        e.Graphics.FillEllipse(new SolidBrush(Color.White), nodo.GetRectangulo);
+                        break;
+                    case 0://coloreado
+                        e.Graphics.FillEllipse(new SolidBrush(colores[nodo.GetGrupo]), nodo.GetRectangulo);
+                        break;
+                }               
                 e.Graphics.DrawString(nodo.GetNombre, font, etiquetas, nodo.GetNombreRectangulo, formato);
-            }  
+            }
         }
 
         //abre una nueva ventana con la matriz de adyacencia
@@ -204,12 +217,49 @@ namespace Editor_grafos
 
         }
 
+        //calcula el numero cromatico de los nodos
+        private void toolStripButtonNumeroCromatico_Click(object sender, EventArgs e)
+        {
+            DialogResult resultado;
+
+            algoritmo = 0;
+            Invalidate();
+            resultado = MessageBox.Show(grafo.NodosColoreados(), "Numero cromatico", MessageBoxButtons.OK);
+
+            if (resultado == DialogResult.OK)
+                algoritmo = -1;
+
+            Invalidate();
+        }
+
+        //asigna el valor que tiene a la arista seleccionada
+        private void numericUpDownPeso_ValueChanged(object sender, EventArgs e)
+        {
+            grafo.GetAristas[aristaSeleccionada].GetPeso = (int)numericUpDownPeso.Value;
+        }
+
+        private void toolStripButtonKuratowskiInterativo_Click(object sender, EventArgs e)
+        {
+            KuratowskiInteractivo kuratowski = new KuratowskiInteractivo(grafo);
+            kuratowski.Show();
+        }
+
+        private void toolStripButtonFloyd_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(grafo.floyd(), "Floyd");
+        }
+
         //evento del raton, hace diferentes cosas dependiendo de la accion
         //1 agrega un nuevo nodo
         //2 agrega una nueva arista
         private void FormEditor_MouseDown(object sender, MouseEventArgs e)
         {
-            switch(accion)
+            if (numericUpDownPeso.Visible)
+            {
+                numericUpDownPeso_ValueChanged(null, null);
+                numericUpDownPeso.Visible = false;
+            }
+            switch (accion)
             {
                 case 1:
                     if (!grafo.EstaDentro(e.X, e.Y))
@@ -218,7 +268,7 @@ namespace Editor_grafos
                 case 2:
                     if (grafo.EstaDentro(e.X, e.Y) && origen.Igual(new Nodo(0, 0, '♪')))
                         origen = grafo.GetNodoSeleccionado(e.X, e.Y);
-                    else if (grafo.EstaDentro(e.X, e.Y) && destino.Igual(new Nodo(0, 0, '♪')) && !origen.EstaDentro(e.X,e.Y))
+                    else if (grafo.EstaDentro(e.X, e.Y) && destino.Igual(new Nodo(0, 0, '♪')) && !origen.EstaDentro(e.X, e.Y))
                     {
                         destino = grafo.GetNodoSeleccionado(e.X, e.Y);
                         grafo.NuevaArista(origen, destino);
@@ -229,7 +279,32 @@ namespace Editor_grafos
                     break;
             }
 
+            foreach (Arista arista in grafo.GetAristas)
+                if (arista.GetNombreRectangulo.Contains(e.X, e.Y))
+                {
+                    aristaSeleccionada = grafo.GetAristas.IndexOf(arista);
+                    numericUpDownPeso.Visible = true;
+                    numericUpDownPeso.Location = new Point(arista.GetNombreRectangulo.X, arista.GetNombreRectangulo.Y);
+                    numericUpDownPeso.Value = arista.GetPeso;
+                }
+
             Invalidate();//refresca la pantalla
+        }
+
+        //inicializa todos los colores posibles
+        private void DefineColores()
+        {
+            try
+            {
+                int limite = 100;
+                colores = Enum.GetValues(typeof(KnownColor)).Cast<KnownColor>().Select(Color.FromKnownColor).ToList();
+                colores.RemoveRange(limite, colores.Count - 1 - limite);
+                colores.Sort();
+            }
+            catch
+            {
+
+            }
         }
     }
 }

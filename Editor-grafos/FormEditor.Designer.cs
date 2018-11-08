@@ -44,9 +44,14 @@
             this.toolStripButtonWn = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCorolarios = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonEuler = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonKura = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonIso = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonKura = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonNumeroCromatico = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonFloyd = new System.Windows.Forms.ToolStripButton();
+            this.numericUpDownPeso = new System.Windows.Forms.NumericUpDown();
+            this.toolStripButtonKuratowskiInterativo = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPeso)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -68,7 +73,10 @@
             this.toolStripButtonCorolarios,
             this.toolStripButtonEuler,
             this.toolStripButtonIso,
-            this.toolStripButtonKura});
+            this.toolStripButtonKura,
+            this.toolStripButtonNumeroCromatico,
+            this.toolStripButtonFloyd,
+            this.toolStripButtonKuratowskiInterativo});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(685, 32);
@@ -215,16 +223,6 @@
             this.toolStripButtonEuler.Text = "Euler";
             this.toolStripButtonEuler.Click += new System.EventHandler(this.toolStripButtonEuler_Click);
             // 
-            // toolStripButtonKura
-            // 
-            this.toolStripButtonKura.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonKura.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonKura.Image")));
-            this.toolStripButtonKura.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonKura.Name = "toolStripButtonKura";
-            this.toolStripButtonKura.Size = new System.Drawing.Size(29, 29);
-            this.toolStripButtonKura.Text = "Kuratowsky";
-            this.toolStripButtonKura.Click += new System.EventHandler(this.toolStripButtonKura_Click);
-            // 
             // toolStripButtonIso
             // 
             this.toolStripButtonIso.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -235,11 +233,60 @@
             this.toolStripButtonIso.Text = "Isomorfismo";
             this.toolStripButtonIso.Click += new System.EventHandler(this.toolStripButtonIso_Click);
             // 
+            // toolStripButtonKura
+            // 
+            this.toolStripButtonKura.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonKura.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonKura.Image")));
+            this.toolStripButtonKura.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonKura.Name = "toolStripButtonKura";
+            this.toolStripButtonKura.Size = new System.Drawing.Size(29, 29);
+            this.toolStripButtonKura.Text = "Kuratowsky";
+            this.toolStripButtonKura.Click += new System.EventHandler(this.toolStripButtonKura_Click);
+            // 
+            // toolStripButtonNumeroCromatico
+            // 
+            this.toolStripButtonNumeroCromatico.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonNumeroCromatico.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonNumeroCromatico.Image")));
+            this.toolStripButtonNumeroCromatico.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonNumeroCromatico.Name = "toolStripButtonNumeroCromatico";
+            this.toolStripButtonNumeroCromatico.Size = new System.Drawing.Size(29, 29);
+            this.toolStripButtonNumeroCromatico.Text = "Numero cromatico";
+            this.toolStripButtonNumeroCromatico.Click += new System.EventHandler(this.toolStripButtonNumeroCromatico_Click);
+            // 
+            // toolStripButtonFloyd
+            // 
+            this.toolStripButtonFloyd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonFloyd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonFloyd.Image")));
+            this.toolStripButtonFloyd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonFloyd.Name = "toolStripButtonFloyd";
+            this.toolStripButtonFloyd.Size = new System.Drawing.Size(29, 29);
+            this.toolStripButtonFloyd.Text = "Floyd";
+            this.toolStripButtonFloyd.Click += new System.EventHandler(this.toolStripButtonFloyd_Click);
+            // 
+            // numericUpDownPeso
+            // 
+            this.numericUpDownPeso.Location = new System.Drawing.Point(622, 35);
+            this.numericUpDownPeso.Name = "numericUpDownPeso";
+            this.numericUpDownPeso.Size = new System.Drawing.Size(51, 20);
+            this.numericUpDownPeso.TabIndex = 5;
+            this.numericUpDownPeso.ValueChanged += new System.EventHandler(this.numericUpDownPeso_ValueChanged);
+            // 
+            // toolStripButtonKuratowskiInterativo
+            // 
+            this.toolStripButtonKuratowskiInterativo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonKuratowskiInterativo.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonKuratowskiInterativo.Image")));
+            this.toolStripButtonKuratowskiInterativo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonKuratowskiInterativo.Name = "toolStripButtonKuratowskiInterativo";
+            this.toolStripButtonKuratowskiInterativo.Size = new System.Drawing.Size(29, 29);
+            this.toolStripButtonKuratowskiInterativo.Text = "Kuratowski interactivo";
+            this.toolStripButtonKuratowskiInterativo.Click += new System.EventHandler(this.toolStripButtonKuratowskiInterativo_Click);
+            // 
             // FormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(685, 389);
+            this.Controls.Add(this.numericUpDownPeso);
             this.Controls.Add(this.toolStrip1);
             this.Name = "FormEditor";
             this.Text = "Editor";
@@ -247,6 +294,7 @@
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormEditor_MouseDown);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPeso)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -271,6 +319,10 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonEuler;
         private System.Windows.Forms.ToolStripButton toolStripButtonKura;
         private System.Windows.Forms.ToolStripButton toolStripButtonIso;
+        private System.Windows.Forms.ToolStripButton toolStripButtonNumeroCromatico;
+        private System.Windows.Forms.ToolStripButton toolStripButtonFloyd;
+        private System.Windows.Forms.NumericUpDown numericUpDownPeso;
+        private System.Windows.Forms.ToolStripButton toolStripButtonKuratowskiInterativo;
     }
 }
 

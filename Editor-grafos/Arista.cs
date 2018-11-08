@@ -7,12 +7,13 @@ using System.Drawing;
 
 namespace Editor_grafos
 {
-    class Arista
+    public class Arista
     {
         private Nodo origen, destino;
         private string nombre;
         private List<Point> puntos;
         private bool visitado;
+        private int peso;
 
         public Arista(Nodo origen, Nodo destino, int nombre)
         {
@@ -22,6 +23,7 @@ namespace Editor_grafos
             visitado = false;
             puntos = new List<Point>();
             CalculaArista();
+            peso = 0;
         }
 
         //regresa el nodo origen
@@ -81,6 +83,19 @@ namespace Editor_grafos
             }
             
             return ret;
+        }
+
+        //devuelve el peso de la arista
+        public int GetPeso
+        {
+            get
+            {
+                return peso;
+            }
+            set
+            {
+                peso = value;
+            }
         }
 
         //calcula los puntos que recorre la arista con formulas de graficacion a

@@ -8,9 +8,9 @@ using System.Drawing;
 
 namespace Editor_grafos
 {
-    class Nodo
+    public class Nodo
     {
-        private int x, y, tamano;
+        private int x, y, tamano, grupo;
         private char nombre;
         private List<Nodo> relaciones;
         private Rectangle rectangulo;
@@ -24,6 +24,7 @@ namespace Editor_grafos
             y -= tamano / 2;
             this.x = x;
             this.y = y;
+            grupo = 0;
 
             visitado = false;
             this.nombre = nombre;
@@ -112,6 +113,19 @@ namespace Editor_grafos
             get
             {
                 return tamano;
+            }
+        }
+
+        //devuelve el grupo
+        public int GetGrupo
+        {
+            get
+            {
+                return grupo;
+            }
+            set
+            {
+                grupo = value;
             }
         }
 

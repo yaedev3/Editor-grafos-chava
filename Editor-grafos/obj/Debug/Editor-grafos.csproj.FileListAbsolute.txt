@@ -56,3 +56,4 @@ C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\obj\Debug\Editor-gr
 C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.csproj.CoreCompileInputs.cache
 C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.exe
 C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\obj\Debug\Editor-grafos.pdb
+C:\Users\jason\Desktop\Chambitas\Rivera_Flores\Editor-grafos\obj\Debug\Editor_grafos.KuratowskiInteractivo.resources

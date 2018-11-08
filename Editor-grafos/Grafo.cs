@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace Editor_grafos
 {
-    class Grafo
+    public class Grafo
     {
         private List<Nodo> nodos;
         private List<Arista> aristas;
@@ -729,6 +729,147 @@ namespace Editor_grafos
             }
 
             return nuevoCircuito;
+        }
+
+        //calcula el numero cromatico de cada nodo.
+        public string NodosColoreados()
+        {
+            string mensaje = "Colores\n";
+            int grupo = 0;
+
+            foreach (Nodo nodo in nodos)
+                nodo.GetGrupo = 0;
+
+            foreach (Nodo nodo in nodos)
+                if (!nodo.GetVisitado)
+                    Corolea(nodo);
+
+            foreach (Nodo nodo in nodos)
+                if (grupo < nodo.GetGrupo)
+                    grupo = nodo.GetGrupo;
+
+            grupo++;
+            NodosVisitados();
+
+            for (int i = 1; i < grupo; i++)
+            {
+                mensaje += i.ToString() + " {";
+                for (int j = 0; j < nodos.Count; j++)
+                    if (nodos[j].GetGrupo == i)
+                    {
+                        mensaje += nodos[j].GetNombre + ", ";
+                    }
+                mensaje = mensaje.Remove(mensaje.Length - 2, 2);
+                mensaje += "}\n";
+            }
+            return mensaje;
+        }
+
+        //define que color representa cada nodo.
+        private void Corolea(Nodo nodo)
+        {
+            nodo.GetVisitado = true;
+            nodo.GetGrupo = MaximoNumero(nodo.GetRelaciones);
+
+            foreach(Nodo relacion in nodo.GetRelaciones)
+                if (!relacion.GetVisitado)
+                    Corolea(relacion);
+        }
+
+        //saca el siguiente color.
+        private int MaximoNumero(List<Nodo> listaNodos)
+        {
+            List<int> numerosValidos = new List<int>();
+
+            for (int i = 0; i < nodos.Count; i++)
+                numerosValidos.Add(i + 1);
+
+            for (int i = 0; i < listaNodos.Count; i++)
+                for (int j = 0; j < numerosValidos.Count; j++)
+                    if (numerosValidos[j] == listaNodos[i].GetGrupo)
+                    {
+                        numerosValidos.Remove(numerosValidos[j]);
+                        j--;
+                    }
+
+            return numerosValidos[0];
+        }
+
+        //calcula el algortimo de floyd
+        public string floyd()
+        {
+            List<List<int>> matriz = new List<List<int>>();
+            int limite = 1000;
+            string mensaje = "";
+
+            for (int i = 0; i < nodos.Count; i++)
+            {
+                matriz.Add(new List<int>());
+                for (int j = 0; j < nodos.Count; j++)
+                    if (nodos[i].GetRelaciones.Contains(nodos[j]))
+                        matriz[matriz.Count - 1].Add(GetPesoAristas(nodos[i], nodos[j]));
+                    else
+                        matriz[matriz.Count - 1].Add(limite);
+            }
+
+            for (int i = 0; i < nodos.Count; i++)
+                matriz[i][i] = 0;
+
+            mensaje += "Matriz inicial:\n   ";
+            mensaje += GeneraMatriz(matriz, limite);
+
+            for (int k = 0; k < nodos.Count; k++)
+                for (int i = 0; i < nodos.Count; i++)
+                    for (int j = 0; j < nodos.Count; j++)
+                        if (matriz[i][k] + matriz[k][j] < matriz[i][j])
+                            matriz[i][j] = matriz[i][k] + matriz[k][j];
+
+            mensaje += "Matriz final:\n   ";
+            mensaje += GeneraMatriz(matriz, limite);
+
+            return mensaje;
+        }
+
+        //concatena la matriz en una cadena
+        private string GeneraMatriz(List<List<int>> matriz, int limite)
+        {
+            string mensaje = "";
+
+            foreach (Nodo nodo in nodos)
+                mensaje += nodo.GetNombre + " ";
+
+            mensaje += "\n";
+
+            for (int i = 0; i < matriz.Count; i++)
+            {
+                mensaje += nodos[i].GetNombre + " ";
+                for (int j = 0; j < matriz[i].Count; j++)
+                    mensaje += matriz[i][j].ToString().Replace(limite.ToString(), "∞") + " ";
+                mensaje += "\n";
+            }
+
+            return mensaje;
+        }
+
+        //devuelve el peso de la arista segun sus nodos.
+        private int GetPesoAristas(Nodo a, Nodo b)
+        {
+            int aux = -1;
+
+            foreach (Arista arista in aristas)
+            {
+                if (arista.GetOrigen.Igual(a) && arista.GetDestino.Igual(b))
+                {
+                    aux = arista.GetPeso;
+                    break;
+                }
+                else if (arista.GetOrigen.Igual(b) && arista.GetDestino.Igual(a))
+                {
+                    aux = arista.GetPeso;
+                    break;
+                }
+            }
+            return aux;
         }
     }
 }

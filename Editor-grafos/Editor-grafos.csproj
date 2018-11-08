@@ -60,6 +60,12 @@
     <Compile Include="GrafosEspeciales.Designer.cs">
       <DependentUpon>GrafosEspeciales.cs</DependentUpon>
     </Compile>
+    <Compile Include="KuratowskiInteractivo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KuratowskiInteractivo.Designer.cs">
+      <DependentUpon>KuratowskiInteractivo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Matriz.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +80,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GrafosEspeciales.resx">
       <DependentUpon>GrafosEspeciales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KuratowskiInteractivo.resx">
+      <DependentUpon>KuratowskiInteractivo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Matriz.resx">
       <DependentUpon>Matriz.cs</DependentUpon>
