@@ -834,20 +834,31 @@ namespace Editor_grafos
         {
             List<List<int>> matriz = new List<List<int>>();
             List<List<int>> p = new List<List<int>>();
+            List<List<List<string>>> simulacion = new List<List<List<string>>>();
             int limite = 1000;
             string mensaje = "";
 
             for (int i = 0; i < nodos.Count; i++)
             {
                 matriz.Add(new List<int>());
+                simulacion.Add(new List<List<string>>());
                 p.Add(new List<int>());
                 for (int j = 0; j < nodos.Count; j++)
                 {
                     p[p.Count - 1].Add(0);
                     if (nodos[i].GetRelaciones.Contains(nodos[j]))
+                    {
                         matriz[matriz.Count - 1].Add(GetPesoAristas(nodos[i], nodos[j]));
+                        simulacion[simulacion.Count - 1].Add(new List<string>());
+                        simulacion[simulacion.Count - 1][simulacion[simulacion.Count - 1].Count - 1].Add(nodos[i].GetNombre);
+                        simulacion[simulacion.Count - 1][simulacion[simulacion.Count - 1].Count - 1].Add(nodos[j].GetNombre);
+                    }
                     else
+                    {
                         matriz[matriz.Count - 1].Add(limite);
+                        simulacion[simulacion.Count - 1].Add(new List<string>());
+                        simulacion[simulacion.Count - 1][simulacion[simulacion.Count - 1].Count - 1].Add(nodos[i].GetNombre);
+                    }
                 }
             }
 
@@ -864,7 +875,11 @@ namespace Editor_grafos
                         {
                             matriz[i][j] = matriz[i][k] + matriz[k][j];
                             p[i][j] = k;
+                            simulacion[i][j] = GeneraLista(simulacion[i][k], simulacion[k][j]);
                         }
+
+            mensaje += "Lista de caminos mas cortos:\n";
+            mensaje += CreaListaCaminos(simulacion);
 
             mensaje += "Matriz P:\n   ";
             mensaje += GeneraMatriz(p, limite);
@@ -872,6 +887,33 @@ namespace Editor_grafos
             mensaje += "Matriz final:\n   ";
             mensaje += GeneraMatriz(matriz, limite);
 
+            return mensaje;
+        }
+
+        //Crea la lista de caminos mas cortos
+        private string CreaListaCaminos(List<List<List<string>>> simulacion)
+        {
+            string mensaje = "";
+
+            foreach (List<List<string>> lista1 in simulacion)//se recorren todas los nodos
+                foreach (List<string> lista2 in lista1)//se recorren las adyacencias
+                {
+                    mensaje += GetCamino(lista2);
+                }
+            return mensaje;
+        }
+
+        private string GetCamino(List<string> caminos)
+        {
+            string mensaje = "";
+
+            if (caminos.Count > 1)
+            {
+                foreach (string cadena in caminos)
+                    mensaje += cadena + "->";
+
+                mensaje = mensaje.Remove(mensaje.Length - 2) + "\n";
+            }
             return mensaje;
         }
 
@@ -915,6 +957,43 @@ namespace Editor_grafos
                 }
             }
             return aux;
+        }
+
+        //devuelve el indice de la arista
+        private int GetNumeroArista(Nodo a, Nodo b)
+        {
+            int aux = -1;
+
+            foreach (Arista arista in aristas)
+            {
+                if (arista.GetOrigen.Igual(a) && arista.GetDestino.Igual(b))
+                {
+                    aux = aristas.IndexOf(arista);
+                    break;
+                }
+                else if (arista.GetOrigen.Igual(b) && arista.GetDestino.Igual(a))
+                {
+                    aux = aristas.IndexOf(arista);
+                    break;
+                }
+            }
+            return aux;
+        }
+
+        //genera la lista de caminos mas cortos
+        private List<string> GeneraLista(List<string> a, List<string> b)
+        {
+            List<string> nuevaLista = new List<string>();
+
+            foreach (string aux in a)
+                if (!nuevaLista.Contains(aux))
+                    nuevaLista.Add(aux);
+
+            foreach (string aux in b)
+                if (!nuevaLista.Contains(aux))
+                    nuevaLista.Add(aux);
+
+            return nuevaLista;
         }
     }
 }
