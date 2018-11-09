@@ -11,7 +11,7 @@ namespace Editor_grafos
     {
         private List<Nodo> nodos;
         private List<Arista> aristas;
-        private int tipoArista, nombreNodo, nombreArista;
+        public int tipoArista, nombreNodo, nombreArista;
 
         public Grafo()
         {
@@ -497,6 +497,40 @@ namespace Editor_grafos
             return corolarios + resultado;
         }
 
+        //Hace el algoritmo de kuratowski con el grafo K33.
+        public string KuratowskyK33()
+        {
+            Grafo grafo2 = new Grafo();
+            string resultado = "";
+            string corolarios = Corolario();
+
+            if (corolarios.Contains("No es plano"))
+                corolarios = "El grafo NO es plano.\nSe comparo con K33 y este fue el resultado:\n";
+            else
+                corolarios = "El grafo ES plano.\nSe comparo con K33 y este fue el resultado:\n";
+
+            grafo2.K33();
+            isomorfismo(grafo2, ref resultado, "Grafo uno", "K33");
+
+            return corolarios + resultado;
+        }
+
+        //crea un grafo k33
+        public void K33()
+        {
+            Clear();
+
+            for (int i = 0; i < 6; i++)
+                NuevoNodo(0, 0);
+
+            for (int i = 0; i < 3; i++)
+            {
+                NuevaArista(nodos[i], nodos[3]);
+                NuevaArista(nodos[i], nodos[4]);
+                NuevaArista(nodos[i], nodos[5]);
+            }
+        }
+
         //Verifica si un grafo es plano según sus corolarios.
         public string Corolario()
         {
@@ -799,17 +833,22 @@ namespace Editor_grafos
         public string floyd()
         {
             List<List<int>> matriz = new List<List<int>>();
+            List<List<int>> p = new List<List<int>>();
             int limite = 1000;
             string mensaje = "";
 
             for (int i = 0; i < nodos.Count; i++)
             {
                 matriz.Add(new List<int>());
+                p.Add(new List<int>());
                 for (int j = 0; j < nodos.Count; j++)
+                {
+                    p[p.Count - 1].Add(0);
                     if (nodos[i].GetRelaciones.Contains(nodos[j]))
                         matriz[matriz.Count - 1].Add(GetPesoAristas(nodos[i], nodos[j]));
                     else
                         matriz[matriz.Count - 1].Add(limite);
+                }
             }
 
             for (int i = 0; i < nodos.Count; i++)
@@ -822,7 +861,13 @@ namespace Editor_grafos
                 for (int i = 0; i < nodos.Count; i++)
                     for (int j = 0; j < nodos.Count; j++)
                         if (matriz[i][k] + matriz[k][j] < matriz[i][j])
+                        {
                             matriz[i][j] = matriz[i][k] + matriz[k][j];
+                            p[i][j] = k;
+                        }
+
+            mensaje += "Matriz P:\n   ";
+            mensaje += GeneraMatriz(p, limite);
 
             mensaje += "Matriz final:\n   ";
             mensaje += GeneraMatriz(matriz, limite);

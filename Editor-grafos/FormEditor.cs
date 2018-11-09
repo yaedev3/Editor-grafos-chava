@@ -76,6 +76,7 @@ namespace Editor_grafos
             toolStripButtonAristaD.Enabled = true;
             accion = -1;
             Invalidate();
+            numericUpDownPeso.Visible = false;
         }
 
         //metodo para dibujar los nodos y aristas

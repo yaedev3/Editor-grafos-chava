@@ -14,6 +14,7 @@ namespace Editor_grafos
         private List<Point> puntos;
         private bool visitado;
         private int peso;
+        private List<Rectangle> rectangulos;
 
         public Arista(Nodo origen, Nodo destino, int nombre)
         {
@@ -22,6 +23,7 @@ namespace Editor_grafos
             this.nombre = "E" + nombre;
             visitado = false;
             puntos = new List<Point>();
+            rectangulos = new List<Rectangle>();
             CalculaArista();
             peso = 0;
         }
@@ -117,8 +119,26 @@ namespace Editor_grafos
                 xNueva = (int)(x1 + i * (x2 - x1));
                 yNueva = (int)(y1 + i * (y2 - y1));
                 if (!origen.EstaDentro(xNueva, yNueva) && !destino.EstaDentro(xNueva, yNueva))
+                {
                     puntos.Add(new Point(xNueva, yNueva));
+                    rectangulos.Add(new Rectangle(xNueva - 3, yNueva - 3, 3, 3));
+                }
             }              
+        }
+
+        //verifica si se dio un click en la arista
+        public bool EstaDentro(int x, int y)
+        {
+            bool respuesta = false;
+
+            foreach(Rectangle rectangulo in rectangulos)
+                if(rectangulo.Contains(x,y))
+                {
+                    respuesta = true;
+                    break;
+                }
+
+            return respuesta;
         }
 
         //regresa un rectangulo para dibujar el nombre de la arista
