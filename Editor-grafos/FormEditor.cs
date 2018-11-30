@@ -15,7 +15,7 @@ namespace Editor_grafos
 
     public partial class FormEditor : Form
     {
-        private Grafo grafo;
+        private Grafo grafo, grafoPrimero, grafoSegundo;
         private int accion, algoritmo, aristaSeleccionada;
         private Pen pluma;
         private SolidBrush etiquetas;
@@ -23,11 +23,14 @@ namespace Editor_grafos
         private StringFormat formato;
         private Nodo origen, destino;
         private List<Color> colores;
+        private bool grafoActual;
 
         public FormEditor()
         {
             InitializeComponent();
-            grafo = new Grafo();
+            grafoPrimero = new Grafo();
+            grafoSegundo = new Grafo();
+            grafo = grafoPrimero;
             accion = -1;
             pluma = new Pen(Color.Black);//pluma para dibujar
             etiquetas = new SolidBrush(Color.Black);//color de fondo de los nodos
@@ -35,11 +38,11 @@ namespace Editor_grafos
             formato = new StringFormat();//formato de la cadena
             formato.FormatFlags = StringFormatFlags.FitBlackBox;
             destino = origen = new Nodo(0, 0, '♪');//inicializa los nodos
-            toolStripButtonIso.Visible = false;
             colores = new List<Color>();
             DefineColores();
             algoritmo = -1;
             numericUpDownPeso.Visible = false;
+            grafoActual = false;
         }
 
         //boton de agregar nodo pone la accion en 1
@@ -84,13 +87,13 @@ namespace Editor_grafos
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;//hace las lineas mas suaves a la vista
 
-            foreach (Arista arista in grafo.GetAristas)
+            foreach (Arista arista in grafoPrimero.GetAristas)
             {
                 e.Graphics.DrawLines(pluma, arista.GetCentro());
                 e.Graphics.DrawString(arista.GetPeso.ToString(), font, etiquetas, arista.GetNombreRectangulo, formato);
             }
 
-            foreach (Nodo nodo in grafo.GetNodos)
+            foreach (Nodo nodo in grafoPrimero.GetNodos)
             {
                 e.Graphics.DrawEllipse(pluma, nodo.GetRectangulo);
                 switch(algoritmo)
@@ -102,6 +105,27 @@ namespace Editor_grafos
                         e.Graphics.FillEllipse(new SolidBrush(colores[nodo.GetGrupo]), nodo.GetRectangulo);
                         break;
                 }               
+                e.Graphics.DrawString(nodo.GetNombre, font, etiquetas, nodo.GetNombreRectangulo, formato);
+            }
+
+            foreach (Arista arista in grafoSegundo.GetAristas)
+            {
+                e.Graphics.DrawLines(pluma, arista.GetCentro());
+                e.Graphics.DrawString(arista.GetPeso.ToString(), font, etiquetas, arista.GetNombreRectangulo, formato);
+            }
+
+            foreach (Nodo nodo in grafoSegundo.GetNodos)
+            {
+                e.Graphics.DrawEllipse(pluma, nodo.GetRectangulo);
+                switch (algoritmo)
+                {
+                    case -1:
+                        e.Graphics.FillEllipse(new SolidBrush(Color.White), nodo.GetRectangulo);
+                        break;
+                    case 0://coloreado
+                        e.Graphics.FillEllipse(new SolidBrush(colores[nodo.GetGrupo]), nodo.GetRectangulo);
+                        break;
+                }
                 e.Graphics.DrawString(nodo.GetNombre, font, etiquetas, nodo.GetNombreRectangulo, formato);
             }
         }
@@ -174,20 +198,25 @@ namespace Editor_grafos
         //3 Wn
         private void GrafosEspeciales(int tipo, int tamano)
         {
+            int inicio = toolStrip1.Height + toolStrip2.Height + 100;
             grafo.GetTipoArista = 1;
             pluma.CustomEndCap = new AdjustableArrowCap(0, 0);
             toolStripButtonAristaD.Enabled = false;
 
+
             switch (tipo)
             {
                 case 1:
-                    grafo.CN(tamano, toolStrip1.Height, Height, Width, 0);
+                    grafo.CN(tamano, inicio , Height - inicio, Width, 0);
+                    Text = "C" + tamano.ToString();
                     break;
                 case 2:
-                    grafo.KN(tamano, toolStrip1.Height, Height, Width, 0);
+                    grafo.KN(tamano, inicio, Height - inicio, Width, 0);
+                    Text = "K" + tamano.ToString();
                     break;
                 case 3:
-                    grafo.WN(tamano, toolStrip1.Height, Height, Width, 0);
+                    grafo.WN(tamano, inicio, Height - inicio, Width, 0);
+                    Text = "W" + tamano.ToString();
                     break;
             }
 
@@ -215,7 +244,9 @@ namespace Editor_grafos
         //
         private void toolStripButtonIso_Click(object sender, EventArgs e)
         {
-
+            string resultado = "";
+            grafoPrimero.isomorfismo(grafoSegundo, ref resultado, "Grafo uno", "Grafo dos");
+            MessageBox.Show(resultado, "Isomorfismo");
         }
 
         //calcula el numero cromatico de los nodos
@@ -239,10 +270,43 @@ namespace Editor_grafos
             grafo.GetAristas[aristaSeleccionada].GetPeso = (int)numericUpDownPeso.Value;
         }
 
+        //Kuratowski interactivo
         private void toolStripButtonKuratowskiInterativo_Click(object sender, EventArgs e)
         {
             KuratowskiInteractivo kuratowski = new KuratowskiInteractivo(grafo);
             kuratowski.Show();
+        }
+
+        //Kruskal
+        private void toolStripButtonKruskal_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(grafo.kruskal(), "Kruskal");
+        }
+
+        private void toolStripButtonQuitarArista_Click(object sender, EventArgs e)
+        {
+            accion = 3;
+        }
+
+        private void toolStripButtonEliminarNodo_Click(object sender, EventArgs e)
+        {
+            accion = 4;
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            grafoActual = !grafoActual;
+
+            if (grafoActual)
+            {
+                toolStripLabelGrafoActual.Text = "Dos";
+                grafo = grafoSegundo;
+            }
+            else
+            {
+                toolStripLabelGrafoActual.Text = "Uno";
+                grafo = grafoPrimero;
+            }
         }
 
         private void toolStripButtonFloyd_Click(object sender, EventArgs e)
@@ -255,6 +319,8 @@ namespace Editor_grafos
         //2 agrega una nueva arista
         private void FormEditor_MouseDown(object sender, MouseEventArgs e)
         {
+            int indice;
+
             if (numericUpDownPeso.Visible)
             {
                 numericUpDownPeso_ValueChanged(null, null);
@@ -278,6 +344,32 @@ namespace Editor_grafos
                     else
                         destino = origen = new Nodo(0, 0, '♪');//reinicia los nodos
                     break;
+                case 3:
+                    indice = -1;
+
+                    for (int i = 0; i < grafo.GetAristas.Count; i++)
+                        if (grafo.GetAristas[i].EstaDentro(e.X, e.Y))
+                        {
+                            indice = i;
+                            break;
+                        }
+                    if (indice != -1)
+                        grafo.EliminaArista(indice);
+                    break;
+                case 4:
+                    indice = -1;
+
+                    for (int i = 0; i < grafo.GetNodos.Count; i++)
+                        if (grafo.GetNodos[i].EstaDentro(e.X, e.Y))
+                        {
+                            indice = i;
+                            break;
+                        }
+                    if (indice != -1)
+                        grafo.EliminaNodo(indice);
+
+                    break;
+
             }
 
             foreach (Arista arista in grafo.GetAristas)

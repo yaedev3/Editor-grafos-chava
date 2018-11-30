@@ -33,8 +33,8 @@
             this.toolStripButtonComprobar = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAgregarNodo = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonQuitarNodo = new System.Windows.Forms.ToolStripButton();
-            this.toolStripComboBoxGrafos = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripComboBoxGrafos = new System.Windows.Forms.ToolStripComboBox();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,16 +82,16 @@
             this.toolStripButtonQuitarNodo.Text = "Quitar arista";
             this.toolStripButtonQuitarNodo.Click += new System.EventHandler(this.toolStripButtonQuitarNodo_Click);
             // 
-            // toolStripComboBoxGrafos
-            // 
-            this.toolStripComboBoxGrafos.Name = "toolStripComboBoxGrafos";
-            this.toolStripComboBoxGrafos.Size = new System.Drawing.Size(121, 25);
-            // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
             this.toolStripLabel1.Size = new System.Drawing.Size(94, 22);
             this.toolStripLabel1.Text = "Selecciona grafo";
+            // 
+            // toolStripComboBoxGrafos
+            // 
+            this.toolStripComboBoxGrafos.Name = "toolStripComboBoxGrafos";
+            this.toolStripComboBoxGrafos.Size = new System.Drawing.Size(121, 25);
             // 
             // KuratowskiInteractivo
             // 

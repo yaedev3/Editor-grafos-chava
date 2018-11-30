@@ -418,7 +418,7 @@ namespace Editor_grafos
                 biyeccion1 = BiyeccionDeNodos();
                 biyeccion2 = grafo2.BiyeccionDeNodos();
 
-                if(ComparaArreglos(biyeccion1, biyeccion2))
+                if (ComparaArreglos(biyeccion1, biyeccion2))
                 {
                     resultado = "El grafo es isomorfo\n";
                     resultado += nombreGrafo1 + ": numero de nodos " + nodos.Count + " y numero de aristas " + aristas.Count;
@@ -643,7 +643,7 @@ namespace Editor_grafos
                     }
                     AristasVisitadas();
                 }
-        
+
             if (completo)
                 return euler;
             else
@@ -805,7 +805,7 @@ namespace Editor_grafos
             nodo.GetVisitado = true;
             nodo.GetGrupo = MaximoNumero(nodo.GetRelaciones);
 
-            foreach(Nodo relacion in nodo.GetRelaciones)
+            foreach (Nodo relacion in nodo.GetRelaciones)
                 if (!relacion.GetVisitado)
                     Corolea(relacion);
         }
@@ -857,7 +857,6 @@ namespace Editor_grafos
                     {
                         matriz[matriz.Count - 1].Add(limite);
                         simulacion[simulacion.Count - 1].Add(new List<string>());
-                        simulacion[simulacion.Count - 1][simulacion[simulacion.Count - 1].Count - 1].Add(nodos[i].GetNombre);
                     }
                 }
             }
@@ -994,6 +993,142 @@ namespace Editor_grafos
                     nuevaLista.Add(aux);
 
             return nuevaLista;
+        }
+
+        //Algoritmo de kruskal
+        public string kruskal()
+        {
+            string message = "Aristas:\n";
+            List<Arista> simulation = new List<Arista>();
+            List<Arista> sort = new List<Arista>();
+            Grafo past, present;
+
+            foreach (Arista eded in aristas)
+            {
+                int aux = sort.Count;
+                if (sort.Count != 0)
+                {
+                    foreach (Arista so in sort)
+                        if (eded.GetPeso <= so.GetPeso)
+                        {
+                            sort.Insert(sort.IndexOf(so), eded);
+                            break;
+                        }
+                    
+                    if (aux == sort.Count)
+                        sort.Add(eded);
+                }
+                else sort.Add(eded);
+            }
+
+            for (int i = 0; i < aristas.Count - 1; i++)
+                if (simulation.Count != 0)
+                {
+                    past = CopiarGrafo(simulation);
+                    past.getGraphConnetion();
+                    simulation.Add(sort[0]);
+                    present = CopiarGrafo(simulation);
+                    present.getGraphConnetion();
+                    sort.RemoveAt(0);
+                    if (GetConexion(past) == GetConexion(present))
+                        simulation.RemoveAt(simulation.Count - 1);
+                }
+                else
+                {
+                    simulation.Add(sort[0]);
+                    sort.RemoveAt(0);
+                }
+
+            foreach (Arista ed in simulation)
+                message += "(" + ed.GetOrigen.GetNombre + "," + ed.GetDestino.GetNombre + ") = " + ed.GetPeso.ToString() + "\n";
+            
+            return message;
+        }
+
+        private Grafo CopiarGrafo(List<Arista> eded)
+        {
+            Grafo g = new Grafo();
+
+            for (int i = 0; i < nodos.Count; i++)
+                g.NuevoNodo(nodos[i].GetX, nodos[i].GetY);
+
+            foreach (Arista ed in eded)
+                g.NuevaArista(ed.GetOrigen, ed.GetDestino);
+
+            return g;
+        }
+
+        public int GetConexion(Grafo ng)
+        {
+            string message = ng.getGraphConnetion();
+            int g = 0;
+
+            for (int i = 0; i < ng.nodos.Count; i++)
+                if (g < ng.nodos[i].GetGrupo)
+                    g = ng.nodos[i].GetGrupo;
+            return g;
+        }
+
+        public string getGraphConnetion()
+        {
+            string message = "Conjuntos:\n";
+            int g = 1;
+
+            for (int i = 0; i < nodos.Count; i++)
+                if (!nodos[i].GetVisitado)
+                {
+                    Connected(nodos[i], g);
+                    g++;
+                }
+
+            NodosVisitados();
+
+            for (int i = 1; i < g; i++)
+            {
+                message += i.ToString() + " {";
+                for (int j = 0; j < nodos.Count; j++)
+                    if (nodos[j].GetGrupo == i)
+                    {
+                        message += nodos[j].GetNombre + ", ";
+                    }
+                message = message.Remove(message.Length - 2, 2);
+                message += "}\n";
+            }
+            return message;
+        }
+
+        private void Connected(Nodo c, int count)
+        {
+            c.GetVisitado = true;
+            c.GetGrupo = count;
+            for (int i = 0; i < c.GetRelaciones.Count; i++)
+                if (!c.GetRelaciones[i].GetVisitado)
+                    Connected(c.GetRelaciones[i], count);
+        }
+
+        public void EliminaNodo(int indice)
+        {
+            for (int i = 0; i < aristas.Count; i++) 
+                if(aristas[i].GetDestino.Igual(nodos[indice]) || aristas[i].GetOrigen.Igual(nodos[indice]))
+                {
+                    EliminaArista(i);
+                    i--;
+                }
+
+            nodos.RemoveAt(indice);
+        }
+
+        public void EliminaArista(int indice)
+        {
+            if (tipoArista == 0)//dirigido
+                aristas[indice].GetOrigen.GetRelaciones.Remove(aristas[indice].GetDestino);
+            else //No dirigido
+            {
+                aristas[indice].GetDestino.GetRelaciones.Remove(aristas[indice].GetOrigen);
+                aristas[indice].GetOrigen.GetRelaciones.Remove(aristas[indice].GetDestino);
+            }
+
+            aristas.RemoveAt(indice);
         }
     }
 }

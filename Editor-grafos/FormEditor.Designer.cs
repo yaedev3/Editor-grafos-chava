@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEditor));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonNodo = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonQuitarArista = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAristaD = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAristaND = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonNuevo = new System.Windows.Forms.ToolStripButton();
@@ -48,10 +49,18 @@
             this.toolStripButtonKura = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonNumeroCromatico = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonFloyd = new System.Windows.Forms.ToolStripButton();
-            this.numericUpDownPeso = new System.Windows.Forms.NumericUpDown();
             this.toolStripButtonKuratowskiInterativo = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonKruskal = new System.Windows.Forms.ToolStripButton();
+            this.numericUpDownPeso = new System.Windows.Forms.NumericUpDown();
+            this.toolStripButtonEliminarNodo = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabelGrafoActual = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripButtonCambiarGrafo = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPeso)).BeginInit();
+            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -59,6 +68,8 @@
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(25, 25);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonNodo,
+            this.toolStripButtonQuitarArista,
+            this.toolStripButtonEliminarNodo,
             this.toolStripButtonAristaD,
             this.toolStripButtonAristaND,
             this.toolStripButtonNuevo,
@@ -76,7 +87,8 @@
             this.toolStripButtonKura,
             this.toolStripButtonNumeroCromatico,
             this.toolStripButtonFloyd,
-            this.toolStripButtonKuratowskiInterativo});
+            this.toolStripButtonKuratowskiInterativo,
+            this.toolStripButtonKruskal});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(685, 32);
@@ -92,6 +104,16 @@
             this.toolStripButtonNodo.Size = new System.Drawing.Size(29, 29);
             this.toolStripButtonNodo.Text = "Agregar Nodo";
             this.toolStripButtonNodo.Click += new System.EventHandler(this.toolStripButtonNodo_Click);
+            // 
+            // toolStripButtonQuitarArista
+            // 
+            this.toolStripButtonQuitarArista.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonQuitarArista.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonQuitarArista.Image")));
+            this.toolStripButtonQuitarArista.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonQuitarArista.Name = "toolStripButtonQuitarArista";
+            this.toolStripButtonQuitarArista.Size = new System.Drawing.Size(29, 29);
+            this.toolStripButtonQuitarArista.Text = "Quitar Arista";
+            this.toolStripButtonQuitarArista.Click += new System.EventHandler(this.toolStripButtonQuitarArista_Click);
             // 
             // toolStripButtonAristaD
             // 
@@ -263,14 +285,6 @@
             this.toolStripButtonFloyd.Text = "Floyd";
             this.toolStripButtonFloyd.Click += new System.EventHandler(this.toolStripButtonFloyd_Click);
             // 
-            // numericUpDownPeso
-            // 
-            this.numericUpDownPeso.Location = new System.Drawing.Point(622, 35);
-            this.numericUpDownPeso.Name = "numericUpDownPeso";
-            this.numericUpDownPeso.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownPeso.TabIndex = 5;
-            this.numericUpDownPeso.ValueChanged += new System.EventHandler(this.numericUpDownPeso_ValueChanged);
-            // 
             // toolStripButtonKuratowskiInterativo
             // 
             this.toolStripButtonKuratowskiInterativo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -281,11 +295,80 @@
             this.toolStripButtonKuratowskiInterativo.Text = "Kuratowski interactivo";
             this.toolStripButtonKuratowskiInterativo.Click += new System.EventHandler(this.toolStripButtonKuratowskiInterativo_Click);
             // 
+            // toolStripButtonKruskal
+            // 
+            this.toolStripButtonKruskal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonKruskal.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonKruskal.Image")));
+            this.toolStripButtonKruskal.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonKruskal.Name = "toolStripButtonKruskal";
+            this.toolStripButtonKruskal.Size = new System.Drawing.Size(29, 29);
+            this.toolStripButtonKruskal.Text = "Kruskal";
+            this.toolStripButtonKruskal.Click += new System.EventHandler(this.toolStripButtonKruskal_Click);
+            // 
+            // numericUpDownPeso
+            // 
+            this.numericUpDownPeso.Location = new System.Drawing.Point(622, 80);
+            this.numericUpDownPeso.Name = "numericUpDownPeso";
+            this.numericUpDownPeso.Size = new System.Drawing.Size(51, 20);
+            this.numericUpDownPeso.TabIndex = 5;
+            this.numericUpDownPeso.ValueChanged += new System.EventHandler(this.numericUpDownPeso_ValueChanged);
+            // 
+            // toolStripButtonEliminarNodo
+            // 
+            this.toolStripButtonEliminarNodo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonEliminarNodo.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEliminarNodo.Image")));
+            this.toolStripButtonEliminarNodo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonEliminarNodo.Name = "toolStripButtonEliminarNodo";
+            this.toolStripButtonEliminarNodo.Size = new System.Drawing.Size(29, 29);
+            this.toolStripButtonEliminarNodo.Text = "Eliminar nodo";
+            this.toolStripButtonEliminarNodo.Click += new System.EventHandler(this.toolStripButtonEliminarNodo_Click);
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel1,
+            this.toolStripLabelGrafoActual,
+            this.toolStripSeparator1,
+            this.toolStripButtonCambiarGrafo});
+            this.toolStrip2.Location = new System.Drawing.Point(0, 32);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(685, 25);
+            this.toolStrip2.TabIndex = 6;
+            this.toolStrip2.Text = "toolStrip2";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(71, 22);
+            this.toolStripLabel1.Text = "Grafo actual";
+            // 
+            // toolStripLabelGrafoActual
+            // 
+            this.toolStripLabelGrafoActual.Name = "toolStripLabelGrafoActual";
+            this.toolStripLabelGrafoActual.Size = new System.Drawing.Size(29, 22);
+            this.toolStripLabelGrafoActual.Text = "Uno";
+            // 
+            // toolStripButtonCambiarGrafo
+            // 
+            this.toolStripButtonCambiarGrafo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonCambiarGrafo.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCambiarGrafo.Image")));
+            this.toolStripButtonCambiarGrafo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonCambiarGrafo.Name = "toolStripButtonCambiarGrafo";
+            this.toolStripButtonCambiarGrafo.Size = new System.Drawing.Size(103, 22);
+            this.toolStripButtonCambiarGrafo.Text = "Cambiar de grafo";
+            this.toolStripButtonCambiarGrafo.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
             // FormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(685, 389);
+            this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.numericUpDownPeso);
             this.Controls.Add(this.toolStrip1);
             this.Name = "FormEditor";
@@ -295,6 +378,8 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPeso)).EndInit();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -323,6 +408,14 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonFloyd;
         private System.Windows.Forms.NumericUpDown numericUpDownPeso;
         private System.Windows.Forms.ToolStripButton toolStripButtonKuratowskiInterativo;
+        private System.Windows.Forms.ToolStripButton toolStripButtonKruskal;
+        private System.Windows.Forms.ToolStripButton toolStripButtonQuitarArista;
+        private System.Windows.Forms.ToolStripButton toolStripButtonEliminarNodo;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelGrafoActual;
+        private System.Windows.Forms.ToolStripButton toolStripButtonCambiarGrafo;
     }
 }
 
