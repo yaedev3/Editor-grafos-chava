@@ -44,7 +44,7 @@ namespace Editor_grafos
         {
             get
             {
-                return rectangulo;
+                return new Rectangle(x, y, tamano, tamano); ;
             }
         }
 

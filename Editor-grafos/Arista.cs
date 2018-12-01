@@ -24,7 +24,7 @@ namespace Editor_grafos
             visitado = false;
             puntos = new List<Point>();
             rectangulos = new List<Rectangle>();
-            CalculaArista();
+            //CalculaArista();
             peso = 0;
             grupo = 0;
         }
@@ -87,7 +87,8 @@ namespace Editor_grafos
         {
             Point[] ret = new Point[2];
 
-            if(puntos.Count !=0)
+            CalculaArista();
+            if (puntos.Count != 0)
             {
                 ret[0] = puntos[0];
                 ret[1] = puntos[puntos.Count - 1];
@@ -119,6 +120,9 @@ namespace Editor_grafos
         {
             double y1, y2, x1, x2, dt, distancia;
             int tamano, xNueva, yNueva;
+
+            puntos.Clear();
+            rectangulos.Clear();
 
             tamano = origen.GetTamano;
             dt = .001;

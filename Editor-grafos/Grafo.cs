@@ -1058,6 +1058,8 @@ namespace Editor_grafos
             Grafo g = new Grafo();
             int indiceOrigen, indiceDestino;
 
+            g.GetTipoArista = tipoArista;
+
             for (int i = 0; i < nodos.Count; i++)
                 g.NuevoNodo(nodos[i].GetX, nodos[i].GetY);
 
@@ -1065,7 +1067,7 @@ namespace Editor_grafos
             {
                 indiceOrigen = GetIndiceNodo(ed.GetOrigen);
                 indiceDestino = GetIndiceNodo(ed.GetDestino);
-                g.NuevaArista(g.GetNodos[indiceDestino], g.GetNodos[indiceOrigen]);
+                g.NuevaArista(g.GetNodos[indiceOrigen], g.GetNodos[indiceDestino]);
             }
 
             return g;
@@ -1076,7 +1078,9 @@ namespace Editor_grafos
             Grafo g = new Grafo();
             int indiceOrigen, indiceDestino;
 
-            foreach(Nodo nodo in nodos)
+            g.GetTipoArista = tipoArista;
+
+            foreach (Nodo nodo in nodos)
                 g.NuevoNodo(nodo.GetX, nodo.GetY);
 
             foreach (Arista ed in aristas)
@@ -1165,13 +1169,10 @@ namespace Editor_grafos
             aristas.RemoveAt(indice);
         }
 
-        public Grafo Busqueda(int top, int width, int right, int raiz)
+        public void Busqueda(int top, int width, int right, int raiz)
         {
             List<List<List<int>>> forest = new List<List<List<int>>>();
-            Grafo copy = CopiarGrafo();
             int piece, y, line = right, count, nodeSize;
-            Point p1 = new Point();
-            Point p2 = new Point();
 
             bpf(nodos[raiz], "R");
             forest.Add(new List<List<int>>());
@@ -1202,14 +1203,20 @@ namespace Editor_grafos
                     {
                         tree.Add(new List<int>());
                         foreach (Nodo nono in nodos[tree[i][j]].GetRelaciones)
-                            if (!nono.GetVisitado && nono.GetVisitado.Equals(nodos[tree[i][j]].GetNombre))
+                            if (!nono.GetVisitado && nono.GetArbol.Equals(nodos[tree[i][j]].GetNombre))
                             {
                                 tree[tree.Count - 1].Add(nodos.IndexOf(nono));
                                 nono.GetVisitado = true;
                             }
                     }
 
-            forest.RemoveAll(elemento => elemento.Count == 0);
+            foreach (List<List<int>> tree in forest)
+                for (int i = 0; i < tree.Count; i++)
+                    if (tree[i].Count == 0)
+                    {
+                        tree.RemoveAt(i);
+                        i--;
+                    }
 
             NodosVisitados();
 
@@ -1249,33 +1256,17 @@ namespace Editor_grafos
                                 int x_conexion_Node = nono.GetX + nodeSize;
                                 if (firstTree == secondTree)
                                 {
-                                    p1.Y = nodos[leaf].GetY + nodeSize;
-                                    p2.Y = nono.GetY + nodeSize;
                                     if (conexion_Node - actual_Node == 1)
                                         aristas[getEdge(nodos[leaf], nono)].GetGrupo = 1;
                                     else if (conexion_Node - actual_Node == 0)
                                         aristas[getEdge(nodos[leaf], nono)].GetGrupo = 2;
                                     else if (conexion_Node - actual_Node < 0)
-                                    {
-                                        p1.X = nodos[leaf].GetX;
-                                        p2.X = nono.GetX;
                                         aristas[getEdge(nodos[leaf], nono)].GetGrupo = 3;
-                                        //aristas[getEdge(nodos[leaf], nono)].AccessTypeEdge = true;
-                                        //aristas[getEdge(nodos[leaf], nono)].setBezier(p1, p2);
-                                    }
                                     else if (conexion_Node - actual_Node > 1)
-                                    {
-                                        p1.X = nodos[leaf].GetX + nono.GetTamano;
-                                        p2.X = nono.GetX + nono.GetTamano;
                                         aristas[getEdge(nodos[leaf], nono)].GetGrupo = 4;
-                                        //aristas[getEdge(nodos[leaf], nono)].AccessTypeEdge = true;
-                                        //aristas[getEdge(nodos[leaf], nono)].setBezier(p1, p2);
-                                    }
                                 }
                                 else
-                                {
                                     aristas[getEdge(nodos[leaf], nono)].GetGrupo = 2;
-                                }
                                 aristas[getEdge(nodos[leaf], nono)].GetVisitado = true;
                             }
                         }
@@ -1283,8 +1274,6 @@ namespace Editor_grafos
 
             NodosVisitados();
             AristasVisitadas();
-
-            return copy;
         }
 
         private void bpf(Nodo a, string value)
@@ -1321,7 +1310,7 @@ namespace Editor_grafos
         {
             int index = -1;
 
-            if (tipoArista == 1)
+            if (tipoArista == 0)
                 foreach (Arista aux in aristas)
                 {
                     if (aux.GetOrigen.GetNombre.Equals(a.GetNombre) && aux.GetDestino.GetNombre.Equals(b.GetNombre))
