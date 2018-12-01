@@ -52,7 +52,7 @@
             0,
             0});
             this.numericUpDownTamano.Minimum = new decimal(new int[] {
-            1,
+            3,
             0,
             0,
             0});
@@ -61,7 +61,7 @@
             this.numericUpDownTamano.TabIndex = 1;
             this.numericUpDownTamano.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDownTamano.Value = new decimal(new int[] {
-            1,
+            3,
             0,
             0,
             0});

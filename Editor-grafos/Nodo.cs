@@ -15,6 +15,7 @@ namespace Editor_grafos
         private List<Nodo> relaciones;
         private Rectangle rectangulo;
         private bool visitado;
+        private string arbol;
 
         public Nodo(int x, int y, char nombre)
         {
@@ -25,7 +26,7 @@ namespace Editor_grafos
             this.x = x;
             this.y = y;
             grupo = 0;
-
+            arbol = "";
             visitado = false;
             this.nombre = nombre;
             rectangulo = new Rectangle(x, y, tamano, tamano);
@@ -84,7 +85,7 @@ namespace Editor_grafos
         }
 
         //agrega una nueva relacion al nodo
-        public void AgregarRelacion(Nodo relacion)
+        public void AgregarRelacion(ref Nodo relacion)
         {
             relaciones.Add(relacion);
         }
@@ -96,6 +97,10 @@ namespace Editor_grafos
             {
                 return y;
             }
+            set
+            {
+                y = value;
+            }
         }
 
         //devuelve el valor de x
@@ -104,6 +109,10 @@ namespace Editor_grafos
             get
             {
                 return x;
+            }
+            set
+            {
+                x = value;
             }
         }
 
@@ -159,6 +168,18 @@ namespace Editor_grafos
             set
             {
                 visitado = value;
+            }
+        }
+
+        public string GetArbol
+        {
+            get
+            {
+                return arbol;
+            }
+            set
+            {
+                arbol = value;
             }
         }
     }

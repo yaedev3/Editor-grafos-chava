@@ -13,7 +13,7 @@ namespace Editor_grafos
         private string nombre;
         private List<Point> puntos;
         private bool visitado;
-        private int peso;
+        private int peso, grupo;
         private List<Rectangle> rectangulos;
 
         public Arista(Nodo origen, Nodo destino, int nombre)
@@ -26,6 +26,20 @@ namespace Editor_grafos
             rectangulos = new List<Rectangle>();
             CalculaArista();
             peso = 0;
+            grupo = 0;
+        }
+
+        //devuelve el grupo
+        public int GetGrupo
+        {
+            get
+            {
+                return grupo;
+            }
+            set
+            {
+                grupo = value;
+            }
         }
 
         //regresa el nodo origen

@@ -32,6 +32,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonNodo = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonQuitarArista = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonEliminarNodo = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAristaD = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAristaND = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonNuevo = new System.Windows.Forms.ToolStripButton();
@@ -52,12 +53,12 @@
             this.toolStripButtonKuratowskiInterativo = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonKruskal = new System.Windows.Forms.ToolStripButton();
             this.numericUpDownPeso = new System.Windows.Forms.NumericUpDown();
-            this.toolStripButtonEliminarNodo = new System.Windows.Forms.ToolStripButton();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelGrafoActual = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonCambiarGrafo = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonBprofundidad = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPeso)).BeginInit();
             this.toolStrip2.SuspendLayout();
@@ -88,10 +89,11 @@
             this.toolStripButtonNumeroCromatico,
             this.toolStripButtonFloyd,
             this.toolStripButtonKuratowskiInterativo,
-            this.toolStripButtonKruskal});
+            this.toolStripButtonKruskal,
+            this.toolStripButtonBprofundidad});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(685, 32);
+            this.toolStrip1.Size = new System.Drawing.Size(883, 32);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -114,6 +116,16 @@
             this.toolStripButtonQuitarArista.Size = new System.Drawing.Size(29, 29);
             this.toolStripButtonQuitarArista.Text = "Quitar Arista";
             this.toolStripButtonQuitarArista.Click += new System.EventHandler(this.toolStripButtonQuitarArista_Click);
+            // 
+            // toolStripButtonEliminarNodo
+            // 
+            this.toolStripButtonEliminarNodo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonEliminarNodo.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEliminarNodo.Image")));
+            this.toolStripButtonEliminarNodo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonEliminarNodo.Name = "toolStripButtonEliminarNodo";
+            this.toolStripButtonEliminarNodo.Size = new System.Drawing.Size(29, 29);
+            this.toolStripButtonEliminarNodo.Text = "Eliminar nodo";
+            this.toolStripButtonEliminarNodo.Click += new System.EventHandler(this.toolStripButtonEliminarNodo_Click);
             // 
             // toolStripButtonAristaD
             // 
@@ -313,16 +325,6 @@
             this.numericUpDownPeso.TabIndex = 5;
             this.numericUpDownPeso.ValueChanged += new System.EventHandler(this.numericUpDownPeso_ValueChanged);
             // 
-            // toolStripButtonEliminarNodo
-            // 
-            this.toolStripButtonEliminarNodo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonEliminarNodo.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEliminarNodo.Image")));
-            this.toolStripButtonEliminarNodo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonEliminarNodo.Name = "toolStripButtonEliminarNodo";
-            this.toolStripButtonEliminarNodo.Size = new System.Drawing.Size(29, 29);
-            this.toolStripButtonEliminarNodo.Text = "Eliminar nodo";
-            this.toolStripButtonEliminarNodo.Click += new System.EventHandler(this.toolStripButtonEliminarNodo_Click);
-            // 
             // toolStrip2
             // 
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -332,14 +334,9 @@
             this.toolStripButtonCambiarGrafo});
             this.toolStrip2.Location = new System.Drawing.Point(0, 32);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(685, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(883, 25);
             this.toolStrip2.TabIndex = 6;
             this.toolStrip2.Text = "toolStrip2";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripLabel1
             // 
@@ -353,6 +350,11 @@
             this.toolStripLabelGrafoActual.Size = new System.Drawing.Size(29, 22);
             this.toolStripLabelGrafoActual.Text = "Uno";
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripButtonCambiarGrafo
             // 
             this.toolStripButtonCambiarGrafo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -363,11 +365,21 @@
             this.toolStripButtonCambiarGrafo.Text = "Cambiar de grafo";
             this.toolStripButtonCambiarGrafo.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
+            // toolStripButtonBprofundidad
+            // 
+            this.toolStripButtonBprofundidad.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonBprofundidad.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonBprofundidad.Image")));
+            this.toolStripButtonBprofundidad.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonBprofundidad.Name = "toolStripButtonBprofundidad";
+            this.toolStripButtonBprofundidad.Size = new System.Drawing.Size(29, 29);
+            this.toolStripButtonBprofundidad.Text = "Busqueda en profundidad";
+            this.toolStripButtonBprofundidad.Click += new System.EventHandler(this.toolStripButtonBprofundidad_Click);
+            // 
             // FormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(685, 389);
+            this.ClientSize = new System.Drawing.Size(883, 389);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.numericUpDownPeso);
             this.Controls.Add(this.toolStrip1);
@@ -416,6 +428,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripLabel toolStripLabelGrafoActual;
         private System.Windows.Forms.ToolStripButton toolStripButtonCambiarGrafo;
+        private System.Windows.Forms.ToolStripButton toolStripButtonBprofundidad;
     }
 }
 

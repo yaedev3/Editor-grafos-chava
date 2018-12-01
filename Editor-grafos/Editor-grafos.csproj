@@ -47,6 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arista.cs" />
+    <Compile Include="BusquedaProfundidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BusquedaProfundidad.Designer.cs">
+      <DependentUpon>BusquedaProfundidad.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,6 +81,9 @@
     <Compile Include="Nodo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BusquedaProfundidad.resx">
+      <DependentUpon>BusquedaProfundidad.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormEditor.resx">
       <DependentUpon>FormEditor.cs</DependentUpon>
     </EmbeddedResource>

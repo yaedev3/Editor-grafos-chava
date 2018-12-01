@@ -203,7 +203,6 @@ namespace Editor_grafos
             pluma.CustomEndCap = new AdjustableArrowCap(0, 0);
             toolStripButtonAristaD.Enabled = false;
 
-
             switch (tipo)
             {
                 case 1:
@@ -286,6 +285,13 @@ namespace Editor_grafos
         private void toolStripButtonQuitarArista_Click(object sender, EventArgs e)
         {
             accion = 3;
+        }
+
+        private void toolStripButtonBprofundidad_Click(object sender, EventArgs e)
+        {
+            BusquedaProfundidad busqueda = new BusquedaProfundidad(grafo);
+
+            busqueda.Show();
         }
 
         private void toolStripButtonEliminarNodo_Click(object sender, EventArgs e)
