@@ -660,19 +660,19 @@ namespace Editor_grafos
                     gradoNodos++;
 
             //Verifica si todas las relaciones son pares.
-            if (gradoNodos == nodos.Count && nodos.Count != 0)
-                foreach (Nodo nodo in nodos)
+            //if (gradoNodos == nodos.Count && nodos.Count != 0)
+            foreach (Nodo nodo in nodos)
+            {
+                mensaje = "";
+                mensaje = AlgoritmoEuler(nodo, mensaje, aristas.Count);
+                completo = CaminoCompleto(mensaje);
+                AristasVisitadas();
+                if (completo)
                 {
-                    mensaje = "";
-                    mensaje = AlgoritmoEuler(nodo, mensaje, aristas.Count);
-                    completo = CaminoCompleto(mensaje);
-                    if (completo)
-                    {
-                        euler += OrdenarCircuito(mensaje.Remove(mensaje.Length - 2));
-                        break;
-                    }
-                    AristasVisitadas();
+                    euler += (mensaje.Remove(mensaje.Length - 2));
+                    break;
                 }
+            }
 
             if (completo)
                 return euler;
@@ -688,8 +688,7 @@ namespace Editor_grafos
                     gradoNodos++;
 
             //Verifica si dos relaciones son impares.
-            if (gradoNodos == 2)
-            {
+            //if (gradoNodos == 2)
                 foreach (Nodo nodo in nodos)
                 {
                     mensaje = "";
@@ -702,7 +701,6 @@ namespace Editor_grafos
                     }
                     AristasVisitadas();
                 }
-            }
 
             if (!completo)
                 euler = "Circuito:\nNinguno\nCamino:\nNinguno.";
@@ -728,18 +726,31 @@ namespace Editor_grafos
             int indice = -1;
 
             foreach (Arista arista in aristas)
-                if (arista.GetOrigen.Igual(nodo) && !arista.GetVisitado)
+                if(tipoArista == 0)
                 {
-                    indice = nodos.IndexOf(arista.GetDestino);
-                    arista.GetVisitado = true;
-                    break;
+                    if (arista.GetOrigen.Igual(nodo) && !arista.GetVisitado)
+                    {
+                        indice = nodos.IndexOf(arista.GetDestino);
+                        arista.GetVisitado = true;
+                        break;
+                    }
                 }
-                else if (arista.GetDestino.Igual(nodo) && !arista.GetVisitado)
+                else
                 {
-                    indice = nodos.IndexOf(arista.GetOrigen);
-                    arista.GetVisitado = true;
-                    break;
+                    if (arista.GetOrigen.Igual(nodo) && !arista.GetVisitado)
+                    {
+                        indice = nodos.IndexOf(arista.GetDestino);
+                        arista.GetVisitado = true;
+                        break;
+                    }
+                    else if (arista.GetDestino.Igual(nodo) && !arista.GetVisitado)
+                    {
+                        indice = nodos.IndexOf(arista.GetOrigen);
+                        arista.GetVisitado = true;
+                        break;
+                    }
                 }
+               
 
             if (indice != -1)
                 return nodos[indice];
@@ -782,7 +793,7 @@ namespace Editor_grafos
             else
             {
                 nuevoCircuito = "";
-                for (int i = 0; i < indice; i++)
+                for (int i = 1; i < indice; i++)
                     lista.Add(lista[i]);
 
                 lista.RemoveRange(0, indice);
