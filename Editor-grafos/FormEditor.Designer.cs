@@ -391,7 +391,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(883, 389);
+            this.ClientSize = new System.Drawing.Size(883, 475);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.numericUpDownPeso);
             this.Controls.Add(this.toolStrip1);

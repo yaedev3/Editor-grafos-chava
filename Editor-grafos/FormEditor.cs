@@ -24,6 +24,7 @@ namespace Editor_grafos
         private Nodo origen, destino;
         private List<Color> colores;
         private bool grafoActual;
+        private List<int> simulacion;
 
         public FormEditor()
         {
@@ -43,6 +44,7 @@ namespace Editor_grafos
             algoritmo = -1;
             numericUpDownPeso.Visible = false;
             grafoActual = false;
+            simulacion = new List<int>();
         }
 
         //boton de agregar nodo pone la accion en 1
@@ -128,6 +130,11 @@ namespace Editor_grafos
                 }
                 e.Graphics.DrawString(nodo.GetNombre, font, etiquetas, nodo.GetNombreRectangulo, formato);
             }
+
+            for (int i = 0; i < grafo.GetAristas.Count; i++)
+                if (simulacion.Contains(i) && algoritmo == 1)
+                    grafo.GetAristas[i].PintaArista(e.Graphics, new Pen(Color.Purple, 5f), toolStripButtonAristaD.Enabled);
+
         }
 
         //abre una nueva ventana con la matriz de adyacencia
@@ -279,7 +286,20 @@ namespace Editor_grafos
         //Kruskal
         private void toolStripButtonKruskal_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(grafo.kruskal(), "Kruskal");
+            DialogResult resultado;
+            string resultadoKruskal = "";
+
+            simulacion.Clear();
+            resultadoKruskal = grafo.kruskal(simulacion);
+            algoritmo = 1;
+            Invalidate();
+
+            resultado = MessageBox.Show(resultadoKruskal, "Kruskal", MessageBoxButtons.OK);
+
+            if (resultado == DialogResult.OK)
+                algoritmo = -1;
+
+            Invalidate();
         }
 
         private void toolStripButtonQuitarArista_Click(object sender, EventArgs e)

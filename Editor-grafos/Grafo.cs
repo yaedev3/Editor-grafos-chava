@@ -1027,7 +1027,7 @@ namespace Editor_grafos
         }
 
         //Algoritmo de kruskal
-        public string kruskal()
+        public string kruskal(List<int> newList)
         {
             string message = "Aristas:\n";
             List<Arista> simulation = new List<Arista>();
@@ -1073,8 +1073,11 @@ namespace Editor_grafos
                 }
 
             foreach (Arista ed in simulation)
+            {
+                newList.Add(aristas.IndexOf(ed));
                 message += "(" + ed.GetOrigen.GetNombre + "," + ed.GetDestino.GetNombre + ") = " + ed.GetPeso.ToString() + "\n";
-
+            }
+            
             return message;
         }
 
