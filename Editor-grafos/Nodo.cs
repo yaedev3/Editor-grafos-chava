@@ -103,11 +103,19 @@ namespace Editor_grafos
             }
         }
 
-        public Point GetPoint
+        public Point GetPointArriba
         {
             get
             {
                 return new Point(x + tamano / 2, y);
+            }
+        }
+
+        public Point GetPointAbajo
+        {
+            get
+            {
+                return new Point(x + tamano / 2, y + tamano);
             }
         }
 

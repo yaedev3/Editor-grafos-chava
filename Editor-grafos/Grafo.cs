@@ -697,7 +697,7 @@ namespace Editor_grafos
                     completo = CaminoCompleto(mensaje);
                     if (completo)
                     {
-                        euler += OrdenarCircuito(mensaje.Remove(mensaje.Length - 2));
+                        euler += OrdenarCamino(mensaje.Remove(mensaje.Length - 2));
                         break;
                     }
                     AristasVisitadas();
@@ -790,6 +790,34 @@ namespace Editor_grafos
                 for (int i = 0; i < lista.Count; i++)
                     nuevoCircuito += lista[i] + "->";
                 nuevoCircuito = nuevoCircuito.Remove(nuevoCircuito.Length - 2);
+            }
+
+            return nuevoCircuito;
+        }
+
+        //Cambia el orden del circuito para que siempre empiece con el primer nodo.
+        private string OrdenarCamino(string circuito)
+        {
+            string nuevoCircuito;
+            List<string> lista;
+            int indice;
+
+            lista = new List<string>(circuito.Replace("->", "♣").Split('♣'));
+            indice = lista.IndexOf(nodos[0].GetNombre);
+
+            if (indice == 0)
+                nuevoCircuito = circuito;
+            else
+            {
+                nuevoCircuito = "";
+                for (int i = 0; i < indice; i++)
+                    lista.Add(lista[i]);
+
+                lista.RemoveRange(0, indice);
+                lista.Add(nodos[0].GetNombre);
+                for (int i = 0; i < lista.Count; i++)
+                    nuevoCircuito += lista[i] + "->";
+                nuevoCircuito = nuevoCircuito.Remove(nuevoCircuito.Length - 5);
             }
 
             return nuevoCircuito;

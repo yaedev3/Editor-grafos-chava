@@ -15,13 +15,14 @@ namespace Editor_grafos
         private Pen pn;
         private bool type;
         private List<Rectangle> rec;
+        private bool oreja;
 
         /// <summary>
         /// Constructor del bezier que recibe los puntos iniciales y finales del mismo
         /// </summary>
         /// <param name="pt1">Punto inicial del bezier</param>
         /// <param name="pt2">Punto final del bezier</param>
-        public Bzier(Point pt1, Point pt2)
+        public Bzier(Point pt1, Point pt2, bool oreja)
         {
             p1 = new Point(pt1.X, pt1.Y);
             p4 = new Point(pt2.X, pt2.Y);
@@ -32,6 +33,7 @@ namespace Editor_grafos
             rec = new List<Rectangle>();
             numPtos = 100;
             arrptos = new Point[numPtos];
+            this.oreja = oreja;
             for (int i = 0; i < numPtos; i++)
                 arrptos[i] = new Point();
             Crea_Puntos();
@@ -89,8 +91,35 @@ namespace Editor_grafos
             rec.Clear();
             dt = 1.0 / (nptos - 1);
             for (int i = 0; i < nptos; i++)
-                arrptos[i] = PointCubicBzier(pt0, pt1, pt2, pt3, i*dt);
+                if (!oreja)
+                    arrptos[i] = PointCubicBzier(pt0, pt1, pt2, pt3, i * dt);
+                else arrptos[i] = PointCubicBzierOreja(pt0, pt1, pt2, pt3, i * dt);
         }
+
+        private Point PointCubicBzierOreja(Point pt0, Point pt1, Point pt2, Point pt3, double t)
+        {
+            double ax, bx, cx;
+            double ay, by, cy;
+            double tsquared, tcubed, xr, yr;
+            Point result;
+            int recSize = 3;
+
+            cx = 20.0 * (pt1.X - pt0.X);
+            bx = 20.0 * (pt2.X - pt1.X) - cx;
+            ax = pt3.X - pt0.X - cx - bx;
+            cy = 20.0 * (pt1.Y - pt0.Y);
+            by = 20.0 * (pt2.Y - pt1.Y) - cy;
+            ay = pt3.Y - pt0.Y - cy - by;
+
+            tsquared = t * t;
+            tcubed = tsquared * t;
+            xr = (ax * tcubed) + (bx * tsquared) + (cx * t) + pt0.X;
+            yr = (ay * tcubed) + (by * tsquared) + (cy * t) + pt0.Y;
+            result = new Point((int)xr, (int)yr);
+            rec.Add(new Rectangle((int)xr - recSize, (int)yr - recSize, recSize, recSize));
+            return result;
+        }
+
         private Point PointCubicBzier(Point pt0, Point pt1, Point pt2, Point pt3, double t)
         {
             double ax, bx, cx;
@@ -102,8 +131,8 @@ namespace Editor_grafos
             cx = 3.0 * (pt1.X - pt0.X);
             bx = 3.0 * (pt2.X - pt1.X) - cx;
             ax = pt3.X - pt0.X - cx - bx;
-            cy = 3.0 * (pt1.Y - pt0.Y);
-            by = 3.0 * (pt2.Y - pt1.Y) - cy;
+            cy = 4.0 * (pt1.Y - pt0.Y);
+            by = 4.0 * (pt2.Y - pt1.Y) - cy;
             ay = pt3.Y - pt0.Y - cy - by;
 
             tsquared = t * t;

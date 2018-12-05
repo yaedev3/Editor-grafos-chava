@@ -98,7 +98,7 @@ namespace Editor_grafos
             foreach (Nodo nodo in grafoPrimero.GetNodos)
             {
                 e.Graphics.DrawEllipse(pluma, nodo.GetRectangulo);
-                switch(algoritmo)
+                switch (algoritmo)
                 {
                     case -1:
                         e.Graphics.FillEllipse(new SolidBrush(Color.White), nodo.GetRectangulo);
@@ -106,7 +106,7 @@ namespace Editor_grafos
                     case 0://coloreado
                         e.Graphics.FillEllipse(new SolidBrush(colores[nodo.GetGrupo]), nodo.GetRectangulo);
                         break;
-                }               
+                }
                 e.Graphics.DrawString(nodo.GetNombre, font, etiquetas, nodo.GetNombreRectangulo, formato);
             }
 

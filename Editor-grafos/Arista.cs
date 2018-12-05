@@ -38,12 +38,20 @@ namespace Editor_grafos
             switch (tipo)
             {
                 case 1:
-                    bezier = new Bzier(origen.GetPoint, destino.GetPoint);
+                    if (ComparaPuntos(origen.GetX, destino.GetX))
+                        bezier = new Bzier(origen.GetPointArriba, destino.GetPointArriba, false);
+                    else
+                        bezier = new Bzier(origen.GetPointAbajo, destino.GetPointAbajo, false);
                     break;
                 case 2:
-                    bezier = new Bzier(origen.GetPoint1, destino.GetPoint2);
+                    bezier = new Bzier(origen.GetPoint1, destino.GetPoint2, true);
                     break;
             }
+        }
+
+        private bool ComparaPuntos(int x1, int x2)
+        {
+            return x1 < x2;
         }
 
         public Bzier GetBzier
@@ -62,6 +70,7 @@ namespace Editor_grafos
                     graphics.DrawLines(pluma, GetCentro());
                     break;
                 case 1:
+                case 2:
                     puntos.Clear();
                     rectangulos.Clear();
                     puntos.AddRange(bezier.getPoint());
@@ -69,8 +78,8 @@ namespace Editor_grafos
                     bezier.SetType(tipoArista);
                     bezier.PintaCurva(graphics);
                     break;
-                case 2:
-                    break;
+
+                    //break;
             }
         }
 
