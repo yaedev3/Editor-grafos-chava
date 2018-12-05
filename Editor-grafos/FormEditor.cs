@@ -289,7 +289,14 @@ namespace Editor_grafos
 
         private void toolStripButtonBprofundidad_Click(object sender, EventArgs e)
         {
-            BusquedaProfundidad busqueda = new BusquedaProfundidad(grafo);
+            BusquedaProfundidad busqueda = new BusquedaProfundidad(grafo, "Busqueda en profundidad", 1);
+
+            busqueda.Show();
+        }
+
+        private void toolStripButtonBusquedaAmplitud_Click(object sender, EventArgs e)
+        {
+            BusquedaProfundidad busqueda = new BusquedaProfundidad(grafo, "Busqueda en amplitud", 2);
 
             busqueda.Show();
         }

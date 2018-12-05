@@ -697,7 +697,7 @@ namespace Editor_grafos
                     completo = CaminoCompleto(mensaje);
                     if (completo)
                     {
-                        euler += mensaje.Remove(mensaje.Length - 2);
+                        euler += OrdenarCircuito(mensaje.Remove(mensaje.Length - 2));
                         break;
                     }
                     AristasVisitadas();
@@ -892,7 +892,8 @@ namespace Editor_grafos
             }
 
             for (int i = 0; i < nodos.Count; i++)
-                matriz[i][i] = 0;
+                if (matriz[i][i] == limite)
+                    matriz[i][i] = 0;
 
             mensaje += "Matriz inicial:\n   ";
             mensaje += GeneraMatriz(matriz, limite);
@@ -979,11 +980,11 @@ namespace Editor_grafos
                     aux = arista.GetPeso;
                     break;
                 }
-                else if (arista.GetOrigen.Igual(b) && arista.GetDestino.Igual(a))
-                {
-                    aux = arista.GetPeso;
-                    break;
-                }
+                //else if (arista.GetOrigen.Igual(b) && arista.GetDestino.Igual(a))
+                //{
+                //    aux = arista.GetPeso;
+                //    break;
+                //}
             }
             return aux;
         }
@@ -1292,6 +1293,115 @@ namespace Editor_grafos
                                 else
                                     aristas[getEdge(nodos[leaf], nono)].GetGrupo = 2;
                                 aristas[getEdge(nodos[leaf], nono)].GetVisitado = true;
+                                aristas[getEdge(nodos[leaf], nono)].GetTipo = 0;
+                            }
+                        }
+                    }
+
+            NodosVisitados();
+            AristasVisitadas();
+        }
+
+        public void BusquedaAmplitud(int top, int width, int right, int raiz)
+        {
+            List<List<List<int>>> forest = new List<List<List<int>>>();
+            int piece, y, line = right, count, nodeSize;
+
+            bpf(nodos[raiz], "R");
+            forest.Add(new List<List<int>>());
+            forest[forest.Count - 1].Add(new List<int>());
+            forest[forest.Count - 1][forest[forest.Count - 1].Count - 1].Add(raiz);
+
+            foreach (Nodo nono in nodos)
+            {
+                if (!nono.GetVisitado)
+                {
+                    bpf(nono, "R");
+                    forest.Add(new List<List<int>>());
+                    forest[forest.Count - 1].Add(new List<int>());
+                    forest[forest.Count - 1][forest[forest.Count - 1].Count - 1].Add(nodos.IndexOf(nono));
+                }
+            }
+
+            NodosVisitados();
+
+            foreach (List<List<int>> tree in forest)
+                foreach (List<int> root in tree)
+                    foreach (int leaf in root)
+                        nodos[leaf].GetVisitado = true;
+
+            foreach (List<List<int>> tree in forest)
+                for (int i = 0; i < tree.Count; i++)
+                    for (int j = 0; j < tree[i].Count; j++)
+                    {
+                        tree.Add(new List<int>());
+                        foreach (Nodo nono in nodos[tree[i][j]].GetRelaciones)
+                            if (!nono.GetVisitado && nono.GetArbol.Equals(nodos[tree[i][j]].GetNombre))
+                            {
+                                tree[tree.Count - 1].Add(nodos.IndexOf(nono));
+                                nono.GetVisitado = true;
+                            }
+                    }
+
+            foreach (List<List<int>> tree in forest)
+                for (int i = 0; i < tree.Count; i++)
+                    if (tree[i].Count == 0)
+                    {
+                        tree.RemoveAt(i);
+                        i--;
+                    }
+
+            NodosVisitados();
+
+            piece = width / forest.Count;
+
+            foreach (List<List<int>> tree in forest)
+            {
+                y = top;
+                foreach (List<int> root in tree)
+                {
+                    count = 1;
+                    foreach (int leaf in root)
+                    {
+                        nodos[leaf].GetY = y;
+                        nodos[leaf].GetX = line + piece / (root.Count + 1) * count - (nodos[leaf].GetTamano / 2);
+                        count++;
+                    }
+                    y += nodos[0].GetTamano + 30;
+                }
+                line += piece;
+            }
+
+            foreach (List<List<int>> tree in forest)
+                foreach (List<int> root in tree)
+                    foreach (int leaf in root)
+                    {
+                        nodeSize = nodos[leaf].GetTamano / 2;
+                        int actual_Node = this.getLevel(forest, nodos.IndexOf(nodos[leaf]));
+                        int firstTree = this.getTree(forest, nodos.IndexOf(nodos[leaf]));
+                        int x_actual_Node = nodos[leaf].GetX + nodeSize;
+                        foreach (Nodo nono in nodos[leaf].GetRelaciones)
+                        {
+                            if (!aristas[getEdge(nodos[leaf], nono)].GetVisitado)
+                            {
+                                int conexion_Node = getLevel(forest, nodos.IndexOf(nono));
+                                int secondTree = getTree(forest, nodos.IndexOf(nono));
+                                int x_conexion_Node = nono.GetX + nodeSize;
+                                if (firstTree == secondTree)
+                                {
+                                    if (conexion_Node - actual_Node == 1)
+                                        aristas[getEdge(nodos[leaf], nono)].GetGrupo = 1;
+                                    else if (conexion_Node - actual_Node == 0)
+                                        aristas[getEdge(nodos[leaf], nono)].GetGrupo = 2;
+                                    else if (conexion_Node - actual_Node < 0)
+                                        aristas[getEdge(nodos[leaf], nono)].GetGrupo = 3;
+                                    else if (conexion_Node - actual_Node > 1)
+                                        aristas[getEdge(nodos[leaf], nono)].GetGrupo = 4;
+                                }
+                                else
+                                    aristas[getEdge(nodos[leaf], nono)].GetGrupo = 2;
+                                aristas[getEdge(nodos[leaf], nono)].GetVisitado = true;
+                                aristas[getEdge(nodos[leaf], nono)].GetTipo = 0;
                             }
                         }
                     }

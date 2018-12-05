@@ -59,7 +59,6 @@ namespace Editor_grafos
             switch (tipo)
             {
                 case 0:
-
                     graphics.DrawLines(pluma, GetCentro());
                     break;
                 case 1:

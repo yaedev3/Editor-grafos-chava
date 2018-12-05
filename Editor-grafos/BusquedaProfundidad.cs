@@ -17,8 +17,9 @@ namespace Editor_grafos
         private Grafo grafo;
         private Font font;
         private StringFormat formato;
+        private int tipo;
 
-        public BusquedaProfundidad(Grafo grafo)
+        public BusquedaProfundidad(Grafo grafo, string texto, int tipo)
         {
             InitializeComponent();
             wiw = new Pen(Color.Aqua);
@@ -28,11 +29,8 @@ namespace Editor_grafos
             formato = new StringFormat();//formato de la cadena
             formato.FormatFlags = StringFormatFlags.FitBlackBox;
             BuscaNodos();
-
-            if (grafo.GetTipoArista == 0)
-                Text = "Busqueda en profundidad";
-            else
-                Text = "Busqueda en amplitud";
+            Text = texto;
+            this.tipo = tipo;
         }
 
         private void BuscaNodos()
@@ -48,15 +46,12 @@ namespace Editor_grafos
             //wiw.CustomEndCap = new AdjustableArrowCap(5, 5);
             g.SmoothingMode = SmoothingMode.HighQuality;
 
-            if(grafo.GetTipoArista == 0)
-            {
-                g.DrawString("Arco", new Font("Arial", 13), Brushes.Red, 10, toolStrip1.Height + 10);
-                g.DrawString("Cruzado", new Font("Arial", 13), Brushes.Blue, 10, toolStrip1.Height + 30);
-                g.DrawString("Retroceso", new Font("Arial", 13), Brushes.Green, 10, toolStrip1.Height + 50);
-                g.DrawString("Avance", new Font("Arial", 13), Brushes.Orange, 10, toolStrip1.Height + 70);
-            }
+            g.DrawString("Arco", new Font("Arial", 13), Brushes.Red, 10, toolStrip1.Height + 10);
+            g.DrawString("Cruzado", new Font("Arial", 13), Brushes.Blue, 10, toolStrip1.Height + 30);
+            g.DrawString("Retroceso", new Font("Arial", 13), Brushes.Green, 10, toolStrip1.Height + 50);
+            g.DrawString("Avance", new Font("Arial", 13), Brushes.Orange, 10, toolStrip1.Height + 70);
 
-            foreach(Arista arista in grafo.GetAristas)
+            foreach (Arista arista in grafo.GetAristas)
             {
                 if (arista.GetGrupo == 1)
                     wiw.Color = Color.Red;
@@ -66,9 +61,12 @@ namespace Editor_grafos
                     wiw.Color = Color.Green;
                 else if (arista.GetGrupo == 4)
                     wiw.Color = Color.Orange;
-                e.Graphics.DrawLines(wiw, arista.GetCentro());
+                if (grafo.tipoArista == 1)
+                    arista.PintaArista(e.Graphics, wiw, false);
+                else
+                    arista.PintaArista(e.Graphics, wiw, true);
             }
-            
+
             foreach (Nodo nodo in grafo.GetNodos)
             {
                 e.Graphics.DrawEllipse(Pens.Black, nodo.GetRectangulo);
@@ -81,7 +79,9 @@ namespace Editor_grafos
         {
             if (toolStripComboBoxNodos.SelectedIndex != -1)
             {
-                grafo.Busqueda(toolStrip1.Height + 90, Width, 15, toolStripComboBoxNodos.SelectedIndex);
+                if (tipo == 1)
+                    grafo.Busqueda(toolStrip1.Height + 90, Width, 15, toolStripComboBoxNodos.SelectedIndex);
+                else grafo.BusquedaAmplitud(toolStrip1.Height + 90, Width, 15, toolStripComboBoxNodos.SelectedIndex);
                 Invalidate();
             }
             else MessageBox.Show("Escoge un nodo raiz.");
