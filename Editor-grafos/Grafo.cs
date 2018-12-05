@@ -1358,7 +1358,7 @@ namespace Editor_grafos
             {
                 if (!nono.GetVisitado)
                 {
-                    bpf(nono, "R");
+                    bpfAmplitud(nono, "R");
                     forest.Add(new List<List<int>>());
                     forest[forest.Count - 1].Add(new List<int>());
                     forest[forest.Count - 1][forest[forest.Count - 1].Count - 1].Add(nodos.IndexOf(nono));
@@ -1465,6 +1465,16 @@ namespace Editor_grafos
                 }
         }
 
+        private void bpfAmplitud(Nodo a, string value)
+        {
+            a.GetVisitado = true;
+            a.GetArbol = value;
+
+            foreach (Nodo nono in a.GetRelaciones)
+                if (!nono.GetVisitado)
+                    bpfAmplitud(nono, a.GetNombre);
+        }
+
         private bool noVisit(List<Nodo> nono)
         {
             bool r = false;
@@ -1545,13 +1555,6 @@ namespace Editor_grafos
                 }
             }
             return index;
-        }
-
-        private void BusquedaAmplitud()
-        {
-            
-            
-
         }
     }
 }
