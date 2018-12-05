@@ -669,7 +669,7 @@ namespace Editor_grafos
                 AristasVisitadas();
                 if (completo)
                 {
-                    euler += (mensaje.Remove(mensaje.Length - 2));
+                    euler += OrdenarCircuito(mensaje.Remove(mensaje.Length - 2));
                     break;
                 }
             }

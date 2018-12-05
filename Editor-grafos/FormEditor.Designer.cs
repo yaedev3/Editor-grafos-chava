@@ -53,13 +53,13 @@
             this.toolStripButtonKuratowskiInterativo = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonKruskal = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonBprofundidad = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonBusquedaAmplitud = new System.Windows.Forms.ToolStripButton();
             this.numericUpDownPeso = new System.Windows.Forms.NumericUpDown();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabelGrafoActual = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonCambiarGrafo = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonBusquedaAmplitud = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPeso)).BeginInit();
             this.toolStrip2.SuspendLayout();
@@ -329,6 +329,16 @@
             this.toolStripButtonBprofundidad.Text = "Busqueda en profundidad";
             this.toolStripButtonBprofundidad.Click += new System.EventHandler(this.toolStripButtonBprofundidad_Click);
             // 
+            // toolStripButtonBusquedaAmplitud
+            // 
+            this.toolStripButtonBusquedaAmplitud.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonBusquedaAmplitud.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonBusquedaAmplitud.Image")));
+            this.toolStripButtonBusquedaAmplitud.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonBusquedaAmplitud.Name = "toolStripButtonBusquedaAmplitud";
+            this.toolStripButtonBusquedaAmplitud.Size = new System.Drawing.Size(29, 29);
+            this.toolStripButtonBusquedaAmplitud.Text = "Busqueda en amplitud";
+            this.toolStripButtonBusquedaAmplitud.Click += new System.EventHandler(this.toolStripButtonBusquedaAmplitud_Click);
+            // 
             // numericUpDownPeso
             // 
             this.numericUpDownPeso.Location = new System.Drawing.Point(622, 80);
@@ -377,16 +387,6 @@
             this.toolStripButtonCambiarGrafo.Text = "Cambiar de grafo";
             this.toolStripButtonCambiarGrafo.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
-            // toolStripButtonBusquedaAmplitud
-            // 
-            this.toolStripButtonBusquedaAmplitud.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonBusquedaAmplitud.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonBusquedaAmplitud.Image")));
-            this.toolStripButtonBusquedaAmplitud.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonBusquedaAmplitud.Name = "toolStripButtonBusquedaAmplitud";
-            this.toolStripButtonBusquedaAmplitud.Size = new System.Drawing.Size(29, 29);
-            this.toolStripButtonBusquedaAmplitud.Text = "Busqueda en amplitud";
-            this.toolStripButtonBusquedaAmplitud.Click += new System.EventHandler(this.toolStripButtonBusquedaAmplitud_Click);
-            // 
             // FormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -395,6 +395,7 @@
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.numericUpDownPeso);
             this.Controls.Add(this.toolStrip1);
+            this.DoubleBuffered = true;
             this.Name = "FormEditor";
             this.Text = "Editor";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FormEditor_Paint);
