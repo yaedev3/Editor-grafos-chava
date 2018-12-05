@@ -77,14 +77,16 @@ namespace Editor_grafos
         //agrega una nueva arista al grafo
         public void NuevaArista(Nodo origen, Nodo destino)
         {
-            aristas.Add(new Arista(origen, destino, nombreArista));
+            int tipo = AristaRepetida(origen, destino);
+
+            aristas.Add(new Arista(origen, destino, nombreArista, tipo));
 
             if (tipoArista == 0)//dirigido
             {
                 //AgregarRelacion(origen, ref destino);
                 origen.AgregarRelacion(ref destino);
             }
-                
+
             else //No dirigido
             {
                 origen.AgregarRelacion(ref destino);
@@ -94,6 +96,28 @@ namespace Editor_grafos
             }
 
             nombreArista++;
+        }
+
+        private int AristaRepetida(Nodo origen, Nodo destino)
+        {
+            int respuesta = 0;
+
+            foreach(Arista arista in aristas)
+                if(arista.GetOrigen.Igual(origen) && arista.GetDestino.Igual(destino))
+                {
+                    respuesta = 1;
+                    break;
+                }
+                else if (arista.GetOrigen.Igual(destino) && arista.GetDestino.Igual(origen))
+                {
+                    respuesta = 1;
+                    break;
+                }
+
+            if (origen.Igual(destino))
+                respuesta = 2;
+
+            return respuesta;
         }
 
         //regresa el tipo de arista que tiene el grafo
@@ -127,7 +151,7 @@ namespace Editor_grafos
         }
 
         //agrega una nueva relacion a un nodo seleccionado
-        public void AgregarRelacion(Nodo nodo,ref Nodo relacion)
+        public void AgregarRelacion(Nodo nodo, ref Nodo relacion)
         {
             for (int i = 0; i < nodos.Count; i++)
                 if (nodos[i].GetNombre.Equals(nodo.GetNombre))
@@ -1021,7 +1045,7 @@ namespace Editor_grafos
                             sort.Insert(sort.IndexOf(so), eded);
                             break;
                         }
-                    
+
                     if (aux == sort.Count)
                         sort.Add(eded);
                 }
@@ -1049,7 +1073,7 @@ namespace Editor_grafos
 
             foreach (Arista ed in simulation)
                 message += "(" + ed.GetOrigen.GetNombre + "," + ed.GetDestino.GetNombre + ") = " + ed.GetPeso.ToString() + "\n";
-            
+
             return message;
         }
 
@@ -1108,7 +1132,7 @@ namespace Editor_grafos
         }
 
         public int GetConexion(Grafo ng)
-        {  
+        {
             int g = 0;
 
             ng.GeneraConexiones();
@@ -1146,8 +1170,8 @@ namespace Editor_grafos
 
         public void EliminaNodo(int indice)
         {
-            for (int i = 0; i < aristas.Count; i++) 
-                if(aristas[i].GetDestino.Igual(nodos[indice]) || aristas[i].GetOrigen.Igual(nodos[indice]))
+            for (int i = 0; i < aristas.Count; i++)
+                if (aristas[i].GetDestino.Igual(nodos[indice]) || aristas[i].GetOrigen.Igual(nodos[indice]))
                 {
                     EliminaArista(i);
                     i--;
@@ -1369,6 +1393,13 @@ namespace Editor_grafos
                 }
             }
             return index;
+        }
+
+        private void BusquedaAmplitud()
+        {
+            
+            
+
         }
     }
 }

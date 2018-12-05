@@ -19,6 +19,7 @@ namespace Editor_grafos
         private Font font;
         private StringFormat formato;
         private int accion;
+        private Nodo origen, destino;
 
         public KuratowskiInteractivo(Grafo grafo)
         {
@@ -34,6 +35,7 @@ namespace Editor_grafos
             formato.FormatFlags = StringFormatFlags.FitBlackBox;
             toolStripComboBoxGrafos.Items.Add("K5");
             toolStripComboBoxGrafos.Items.Add("K3,3");
+            destino = origen = new Nodo(0, 0, '♪');//inicializa los nodos
             accion = -1;
         }
 
@@ -54,16 +56,24 @@ namespace Editor_grafos
         
         private void toolStripButtonAgregarNodo_Click(object sender, EventArgs e)
         {
+            CambiaBlanco();
             toolStripButtonAgregarNodo.BackColor = Color.Red;
-            toolStripButtonQuitarNodo.BackColor = Color.White;
             accion = 0;
         }
 
         private void toolStripButtonQuitarNodo_Click(object sender, EventArgs e)
         {
+            CambiaBlanco();
             toolStripButtonQuitarNodo.BackColor = Color.Red;
-            toolStripButtonAgregarNodo.BackColor = Color.White;
             accion = 1;
+        }
+
+        private void CambiaBlanco()
+        {
+            toolStripButtonQuitarNodo.BackColor = Color.White;
+            toolStripButtonAgregarNodo.BackColor = Color.White;
+            toolStripButtonAgregarAristas.BackColor = Color.White;
+            toolStripButtonQuitar.BackColor = Color.White;
         }
 
         private void KuratowskiInteractivo_MouseDown(object sender, MouseEventArgs e)
@@ -90,6 +100,32 @@ namespace Editor_grafos
                         }
                     Invalidate();
                     break;
+                case 2:
+                    if (grafo.EstaDentro(e.X, e.Y) && origen.Igual(new Nodo(0, 0, '♪')))
+                        origen = grafo.GetNodoSeleccionado(e.X, e.Y);
+                    else if (grafo.EstaDentro(e.X, e.Y) && destino.Igual(new Nodo(0, 0, '♪')))
+                    {
+                        destino = grafo.GetNodoSeleccionado(e.X, e.Y);
+                        grafo.NuevaArista(origen, destino);
+                        destino = origen = new Nodo(0, 0, '♪');
+                    }
+                    else
+                        destino = origen = new Nodo(0, 0, '♪');//reinicia los nodos
+                    Invalidate();
+                    break;
+                case 3:
+                    int indice = -1;
+
+                    for (int i = 0; i < grafo.GetNodos.Count; i++)
+                        if (grafo.GetNodos[i].EstaDentro(e.X, e.Y))
+                        {
+                            indice = i;
+                            break;
+                        }
+                    if (indice != -1)
+                        grafo.EliminaNodo(indice);
+                    Invalidate();
+                    break;
             }
         }
 
@@ -107,7 +143,7 @@ namespace Editor_grafos
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;//hace las lineas mas suaves a la vista
 
             foreach (Arista arista in grafo.GetAristas)
-                e.Graphics.DrawLines(pluma, arista.GetCentro());
+                arista.PintaArista(e.Graphics, pluma, false);
 
             foreach (Nodo nodo in grafo.GetNodos)
             {
@@ -115,6 +151,20 @@ namespace Editor_grafos
                 e.Graphics.FillEllipse(new SolidBrush(Color.White), nodo.GetRectangulo);
                 e.Graphics.DrawString(nodo.GetNombre, font, etiquetas, nodo.GetNombreRectangulo, formato);
             }
+        }
+
+        private void toolStripButtonAgregarAristas_Click(object sender, EventArgs e)
+        {
+            CambiaBlanco();
+            accion = 2;
+            toolStripButtonAgregarAristas.BackColor = Color.Red;
+        }
+
+        private void toolStripButtonQuitar_Click(object sender, EventArgs e)
+        {
+            CambiaBlanco();
+            accion = 3;
+            toolStripButtonQuitar.BackColor = Color.Red;
         }
     }
 }

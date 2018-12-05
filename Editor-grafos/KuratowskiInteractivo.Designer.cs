@@ -35,6 +35,8 @@
             this.toolStripButtonQuitarNodo = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBoxGrafos = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripButtonAgregarAristas = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonQuitar = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,7 +45,9 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonComprobar,
             this.toolStripButtonAgregarNodo,
+            this.toolStripButtonAgregarAristas,
             this.toolStripButtonQuitarNodo,
+            this.toolStripButtonQuitar,
             this.toolStripLabel1,
             this.toolStripComboBoxGrafos});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -93,6 +97,26 @@
             this.toolStripComboBoxGrafos.Name = "toolStripComboBoxGrafos";
             this.toolStripComboBoxGrafos.Size = new System.Drawing.Size(121, 25);
             // 
+            // toolStripButtonAgregarAristas
+            // 
+            this.toolStripButtonAgregarAristas.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonAgregarAristas.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAgregarAristas.Image")));
+            this.toolStripButtonAgregarAristas.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonAgregarAristas.Name = "toolStripButtonAgregarAristas";
+            this.toolStripButtonAgregarAristas.Size = new System.Drawing.Size(89, 22);
+            this.toolStripButtonAgregarAristas.Text = "Agregar aristas";
+            this.toolStripButtonAgregarAristas.Click += new System.EventHandler(this.toolStripButtonAgregarAristas_Click);
+            // 
+            // toolStripButtonQuitar
+            // 
+            this.toolStripButtonQuitar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonQuitar.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonQuitar.Image")));
+            this.toolStripButtonQuitar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonQuitar.Name = "toolStripButtonQuitar";
+            this.toolStripButtonQuitar.Size = new System.Drawing.Size(75, 22);
+            this.toolStripButtonQuitar.Text = "Quitar nodo";
+            this.toolStripButtonQuitar.Click += new System.EventHandler(this.toolStripButtonQuitar_Click);
+            // 
             // KuratowskiInteractivo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -118,5 +142,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonQuitarNodo;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxGrafos;
+        private System.Windows.Forms.ToolStripButton toolStripButtonAgregarAristas;
+        private System.Windows.Forms.ToolStripButton toolStripButtonQuitar;
     }
 }

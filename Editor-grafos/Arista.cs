@@ -13,10 +13,11 @@ namespace Editor_grafos
         private string nombre;
         private List<Point> puntos;
         private bool visitado;
-        private int peso, grupo;
+        private int peso, grupo, tipo;
         private List<Rectangle> rectangulos;
+        private Bzier bezier;
 
-        public Arista(Nodo origen, Nodo destino, int nombre)
+        public Arista(Nodo origen, Nodo destino, int nombre, int tipo)
         {
             this.origen = origen;
             this.destino = destino;
@@ -27,6 +28,64 @@ namespace Editor_grafos
             //CalculaArista();
             peso = 0;
             grupo = 0;
+            this.tipo = tipo;
+            InicializaCurva();
+        }
+
+        //Inicializa la curva
+        private void InicializaCurva()
+        {
+            switch (tipo)
+            {
+                case 1:
+                    bezier = new Bzier(origen.GetPoint, destino.GetPoint);
+                    break;
+                case 2:
+                    bezier = new Bzier(origen.GetPoint1, destino.GetPoint2);
+                    break;
+            }
+        }
+
+        public Bzier GetBzier
+        {
+            get
+            {
+                return bezier;
+            }
+        }
+
+        public void PintaArista(Graphics graphics, Pen pluma, bool tipoArista)
+        {
+            switch (tipo)
+            {
+                case 0:
+
+                    graphics.DrawLines(pluma, GetCentro());
+                    break;
+                case 1:
+                    puntos.Clear();
+                    rectangulos.Clear();
+                    puntos.AddRange(bezier.getPoint());
+                    rectangulos.AddRange(bezier.getRec());
+                    bezier.SetType(tipoArista);
+                    bezier.PintaCurva(graphics);
+                    break;
+                case 2:
+                    break;
+            }
+        }
+
+        //0 para arista simple, 1 para arista con bezier y 2 para oreja
+        public int GetTipo
+        {
+            get
+            {
+                return tipo;
+            }
+            set
+            {
+                tipo = value;
+            }
         }
 
         //devuelve el grupo
@@ -87,7 +146,10 @@ namespace Editor_grafos
         {
             Point[] ret = new Point[2];
 
+            puntos.Clear();
+            rectangulos.Clear();
             CalculaArista();
+
             if (puntos.Count != 0)
             {
                 ret[0] = puntos[0];
@@ -120,9 +182,6 @@ namespace Editor_grafos
         {
             double y1, y2, x1, x2, dt, distancia;
             int tamano, xNueva, yNueva;
-
-            puntos.Clear();
-            rectangulos.Clear();
 
             tamano = origen.GetTamano;
             dt = .001;

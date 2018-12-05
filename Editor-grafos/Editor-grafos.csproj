@@ -53,6 +53,7 @@
     <Compile Include="BusquedaProfundidad.Designer.cs">
       <DependentUpon>BusquedaProfundidad.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bzier.cs" />
     <Compile Include="FormEditor.cs">
       <SubType>Form</SubType>
     </Compile>

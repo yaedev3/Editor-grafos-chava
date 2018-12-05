@@ -89,7 +89,7 @@ namespace Editor_grafos
 
             foreach (Arista arista in grafoPrimero.GetAristas)
             {
-                e.Graphics.DrawLines(pluma, arista.GetCentro());
+                arista.PintaArista(e.Graphics, pluma, toolStripButtonAristaD.Enabled);
                 e.Graphics.DrawString(arista.GetPeso.ToString(), font, etiquetas, arista.GetNombreRectangulo, formato);
             }
 
@@ -110,7 +110,7 @@ namespace Editor_grafos
 
             foreach (Arista arista in grafoSegundo.GetAristas)
             {
-                e.Graphics.DrawLines(pluma, arista.GetCentro());
+                arista.PintaArista(e.Graphics, pluma, toolStripButtonAristaD.Enabled);
                 e.Graphics.DrawString(arista.GetPeso.ToString(), font, etiquetas, arista.GetNombreRectangulo, formato);
             }
 
@@ -332,6 +332,7 @@ namespace Editor_grafos
                 numericUpDownPeso_ValueChanged(null, null);
                 numericUpDownPeso.Visible = false;
             }
+
             switch (accion)
             {
                 case 1:
@@ -341,7 +342,7 @@ namespace Editor_grafos
                 case 2:
                     if (grafo.EstaDentro(e.X, e.Y) && origen.Igual(new Nodo(0, 0, '♪')))
                         origen = grafo.GetNodoSeleccionado(e.X, e.Y);
-                    else if (grafo.EstaDentro(e.X, e.Y) && destino.Igual(new Nodo(0, 0, '♪')) && !origen.EstaDentro(e.X, e.Y))
+                    else if (grafo.EstaDentro(e.X, e.Y) && destino.Igual(new Nodo(0, 0, '♪')))
                     {
                         destino = grafo.GetNodoSeleccionado(e.X, e.Y);
                         grafo.NuevaArista(origen, destino);

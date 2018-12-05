@@ -103,6 +103,30 @@ namespace Editor_grafos
             }
         }
 
+        public Point GetPoint
+        {
+            get
+            {
+                return new Point(x + tamano / 2, y);
+            }
+        }
+
+        public Point GetPoint1
+        {
+            get
+            {
+                return new Point(x, y + tamano / 2);
+            }
+        }
+
+        public Point GetPoint2
+        {
+            get
+            {
+                return new Point(x + tamano / 2, y);
+            }
+        }
+
         //devuelve el valor de x
         public int GetX
         {

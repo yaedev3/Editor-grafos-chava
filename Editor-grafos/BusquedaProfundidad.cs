@@ -23,11 +23,16 @@ namespace Editor_grafos
             InitializeComponent();
             wiw = new Pen(Color.Aqua);
             wiw.Width = 3;
-            this.grafo = grafo.CopiarGrafo();
+            this.grafo = grafo.CopiarGrafo();          
             font = new Font("Arial", 11);//estilo de la letra
             formato = new StringFormat();//formato de la cadena
             formato.FormatFlags = StringFormatFlags.FitBlackBox;
             BuscaNodos();
+
+            if (grafo.GetTipoArista == 0)
+                Text = "Busqueda en profundidad";
+            else
+                Text = "Busqueda en amplitud";
         }
 
         private void BuscaNodos()
@@ -41,12 +46,15 @@ namespace Editor_grafos
             Graphics g = e.Graphics;
 
             //wiw.CustomEndCap = new AdjustableArrowCap(5, 5);
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            g.SmoothingMode = SmoothingMode.HighQuality;
 
-            g.DrawString("Arco", new Font("Arial", 13), Brushes.Red, 10, toolStrip1.Height + 10);
-            g.DrawString("Cruzado", new Font("Arial", 13), Brushes.Blue, 10, toolStrip1.Height + 30);
-            g.DrawString("Retroceso", new Font("Arial", 13), Brushes.Green, 10, toolStrip1.Height + 50);
-            g.DrawString("Avance", new Font("Arial", 13), Brushes.Orange, 10, toolStrip1.Height + 70);
+            if(grafo.GetTipoArista == 0)
+            {
+                g.DrawString("Arco", new Font("Arial", 13), Brushes.Red, 10, toolStrip1.Height + 10);
+                g.DrawString("Cruzado", new Font("Arial", 13), Brushes.Blue, 10, toolStrip1.Height + 30);
+                g.DrawString("Retroceso", new Font("Arial", 13), Brushes.Green, 10, toolStrip1.Height + 50);
+                g.DrawString("Avance", new Font("Arial", 13), Brushes.Orange, 10, toolStrip1.Height + 70);
+            }
 
             foreach(Arista arista in grafo.GetAristas)
             {
